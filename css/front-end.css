@@ -1,0 +1,67 @@
+/**
+ * @package Tagregator
+ */
+
+#tggr-media-item-container {
+	overflow: auto;
+}
+
+	.tggr-media-item {
+		float: left;
+		width: 29%;
+		margin: 10px;
+		padding: 7px;
+		background: white;
+		border: 1px solid #BDBDBD;
+
+		-webkit-border-radius: 8px;
+		-moz-border-radius:    8px;
+		border-radius:         8px;
+
+		-webkit-box-shadow: 3px 3px 3px 1px #DEDEDE;
+		-moz-box-shadow:    3px 3px 3px 1px #DEDEDE;
+		box-shadow:         3px 3px 3px 1px #DEDEDE;
+	}
+
+		.tggr-author-meta {
+			overflow: auto;
+		}
+
+			.tggr-author-avatar {
+				float: left;
+				margin: 0 5px 5px 0;
+				border: 1px solid #d3d3d3;
+			}
+
+			.tggr-author-name {
+				float: left;
+				margin-right: 5px;
+			}
+
+			.tggr-author-username {
+				float: left;
+			}
+
+		.tggr-item-content {
+			margin-top: 1em;
+		}
+
+
+		/*
+		 * Source-specific styles
+		 */
+
+		.tggr-tweets {
+		}
+
+			.tggr-source.twitter {
+				width: 16px;
+				height: 16px;
+				background: url( '../images/tggr-source-twitter/bird_black_16_0.png' ) no-repeat;
+			}
+
+		.tggr-instagram {
+		}
+
+		.tggr-flickr {
+		}

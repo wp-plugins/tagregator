@@ -1,0 +1,62 @@
+== Highest Priority ==
+* chrome layout issues. related to column width
+* test
+	w/ really active twitter hashtag to get real world data
+	w/ different hashtags. some w/ recent data, some with only old. some w/ constant new tweets, some w/ only a few. make sure all tweets are pulled into db and displayed
+	diff browsers, mobile devices
+* posts duplicated in db. refresh chrome and ff at same time to reproduce
+	* even after fix this, maybe add cron job to remove duplicate posts that slip through?
+* "TypeError: a is undefined" JS error on twentythirteen
+
+
+== High Priority ==
+* release on wporg plugin repo
+* responsive layouts. maybe make # of columns automatic instead of hardcode? no, still want it, but maybe make it max columns. some kind of min-width to force it to go 1 column on mobile
+* sideload and display twitter photos
+	* masonry imagesLoaded
+* Fix calculateMediaItemWidth()
+* i18n
+* https://dev.twitter.com/terms/display-requirements
+	https://dev.twitter.com/docs/image-resources
+	including "on" states
+	https://dev.twitter.com/docs/follow-button
+	https://dev.twitter.com/docs/intents
+* convert urls in content to links. make_clickable()
+* skip retweets
+* if a term already exists for the a hashtag in a different taxonomy, the slug will be "hashtag-2" and posts won't pull. get slug dynamically isntead of assuming
+
+
+== Medium Priority ==
+* cron to save posts when no one viewing page. but how will it know which tags to get? hae to scan all posts/pages for shortcodes? maybe when the shortcode loads, it adds the current $post->ID to a _protected setting. then periodically empty the array so it doesn't keep pulling old ones after they're removed from the shortcode
+* classes for instagram and flickr
+* add meta boxes to posts to show extra fields, and save values
+* postmeta key to display/hide a post
+* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check
+* make Hashtags taxonomy edit page expand Tagregator menu when active instead of Posts menu
+* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check
+* only load css/js on shortcode page
+* if get tweets requests fails b/c of bad auth, obtain new bearer token
+* when calling api, maybe detect if no posts (so know it's first time), and then try to go back and get lots more, so that you get items from before the plugin was activated
+* maybe remove items from the bottom of the container once you reach ~100 items, so the page doesn't get too long and memory bloated
+* maybe not humantimediff in media iteam b/c unless you constantly update it dynamically, they're all gonna say "1 min ago" eventually. could add timestamp as data-timestamp attribute, then have js go through and recalc all. but would need js equiv for humantimediff
+* support pulling from usernames
+* support multiple hashtags,usernames on one page
+* infinite scroll? so you can see what happened earlier
+* don't want this page to get cached? b/c when update, it'll output a huge amount of posts on the first ajax call
+	* no, b/c cache generated before new posts added?
+* register_page_settings() - add &post_type=[?] ? but would want it for all of them, but if leave off then it assumes it's 'post'
+
+
+== Low Priority ==
+* notice if at least 1 media source doesn't have creds entered / warning if havne't entered settings yet
+* meta caps instead of using update_options
+* settings input fields large enough to hold access key, etc w/out scrolling
+* better to just output raw string instead of json encoding?
+* if a post has multple hastags, don't duplicate it, just assign multiple terms to it
+* render_latest_media_items() - if not having diff transient for each hashtag, could lead to situations where one tag gets checks more frequently that others, edge case though
+* add login action to prevent tagregator user from actually logging in
+* maybe use twitter 'authorize app' process ala Tweet Watcher, rather than asking them to create a their own app. rate limits become new problem then? or does that solve rate limit problem b/c each user has their own limit?
+* using transients incorrectly (see #20316); use option instead
+* create_post_author() - todo if multisite, make sure exists on current blog
+* update_newest_tweet_id() - support multiple hashtags
+* get_new_hashtagged_tweets() - if response code is 'over limit', then decrease refresh period? log it too

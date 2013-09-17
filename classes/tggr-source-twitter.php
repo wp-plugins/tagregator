@@ -1,0 +1,382 @@
+<?php
+
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ )
+	die( 'Access denied.' );
+
+if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
+	/**
+	 * Creates a custom post type and associated taxonomies
+	 * Implements Twitter's "Application-only Authentication" described at https://dev.twitter.com/docs/auth/application-only-auth
+	 * @package Tagregator
+	 */
+	class TGGRSourceTwitter extends TGGRMediaSource {
+		protected static $readable_properties  = array( 'view_folder' );
+		protected static $writeable_properties = array();
+		protected $setting_names, $default_settings, $view_folder;
+
+		const POST_TYPE_NAME_SINGULAR = 'Tweet';
+		const POST_TYPE_NAME_PLURAL   = 'Tweets';
+		const POST_TYPE_SLUG          = 'tggr-tweets';
+		const SETTINGS_TITLE          = 'Twitter';
+		const SETTINGS_PREFIX         = 'tggr_tweets_';
+		const API_URL                 = 'https://api.twitter.com';	// It's important to use HTTPS for security
+
+
+		/**
+		 * Constructor
+		 * @mvc Controller
+		 */
+		protected function __construct() {
+			$this->view_folder   = dirname( __DIR__ ) . '/views/'. str_replace( '.php', '', basename( __FILE__ ) );
+			$this->setting_names = array( 'Consumer Key', 'Consumer Secret', '_bearer_token', '_newest_tweet_id' );
+
+			foreach ( $this->setting_names as $key ) {
+				$this->default_settings[ strtolower( str_replace( ' ', '_', $key ) ) ] = '';
+			}
+			$this->default_settings[ '_newest_tweet_id' ] = 0;
+
+			$this->register_hook_callbacks();
+		}
+
+		/**
+		 * Prepares site to use the plugin during activation
+		 * @mvc Controller
+		 *
+		 * @param bool $network_wide
+		 */
+		public function activate( $network_wide ) {
+			$this->init();
+		}
+
+		/**
+		 * Rolls back activation procedures when de-activating the plugin
+		 * @mvc Controller
+		 */
+		public function deactivate() {}
+
+		/**
+		 * Register callbacks for actions and filters
+		 * @mvc Controller
+		 */
+		public function register_hook_callbacks() {
+			add_action( 'init',                                       array( $this, 'init' ) );
+			add_action( 'admin_init',                                 array( $this, 'register_settings' ) );
+
+			add_filter( Tagregator::PREFIX . 'default_settings',      __CLASS__ . '::register_default_settings' );
+			add_filter( 'update_option_'. TGGRSettings::SETTING_SLUG, __CLASS__ . '::obtain_bearer_token', 10, 2 );
+		}
+
+		/**
+		 * Initializes variables
+		 * @mvc Controller
+		 */
+		public function init() {
+			self::register_post_type( self::POST_TYPE_SLUG, $this->get_post_type_params( self::POST_TYPE_SLUG, self::POST_TYPE_NAME_SINGULAR, self::POST_TYPE_NAME_PLURAL ) );
+			self::create_post_author();   // It should already exist from the first time this class was instantiated, but we need to make sure it still exists now
+			self::get_post_author_user_id();
+		}
+
+		/**
+		 * Executes the logic of upgrading from specific older versions of the plugin to the current version
+		 * @mvc Model
+		 *
+		 * @param string $db_version
+		 */
+		public function upgrade( $db_version = 0 ) {}
+
+		/**
+		 * Validates submitted setting values before they get saved to the database. Invalid data will be overwritten with defaults.
+		 * @mvc Model
+		 *
+		 * @param array $new_settings
+		 * @return array
+		 */
+		public function validate_settings( $new_settings ) {
+			$new_settings = shortcode_atts( $this->default_settings, $new_settings, TGGRSettings::SETTING_SLUG );
+
+			foreach ( $new_settings as $setting => $value ) {
+				switch( $setting ) {
+					case '_bearer_token':
+						$new_settings[ $setting ] = strip_tags( $value );
+					break;
+
+					default:
+						if ( is_string( $value ) ) {
+							$new_settings[ $setting ] = sanitize_text_field( $value );
+						} else {
+							$new_settings[ $setting ] = $this->default_settings[ $setting ];
+						}
+					break;
+				}
+			}
+
+			return $new_settings;
+		}
+
+		/**
+		 * Obtains a bearer token from the API and saves it in the settings
+		 * Can be called as callback for update_options_{$name}, or directly
+		 * @mvc Controller
+		 *
+		 * @param string $old_settings
+		 * @param string $new_settings
+		 * @return string
+		 */
+		public static function obtain_bearer_token( $old_settings = null, $new_settings = null ) {
+			$need_new_token = false;
+
+			if ( null == $old_settings && null == $new_settings ) {
+				$need_new_token = true;
+			}
+
+			if ( $old_settings[ __CLASS__ ]['consumer_key'] != $new_settings[ __CLASS__ ]['consumer_key'] || $old_settings[ __CLASS__ ]['consumer_secret'] != $new_settings[ __CLASS__ ]['consumer_secret'] ) {
+				$need_new_token = true;
+			}
+
+			if ( $need_new_token ) {
+				$credentials = self::get_bearer_credentials( $new_settings[ __CLASS__ ]['consumer_key'], $new_settings[ __CLASS__ ]['consumer_secret'] );
+				$new_settings[ __CLASS__ ]['_bearer_token'] = self::get_bearer_token( $credentials );
+
+				// Avoid infinite loop when updating option
+				remove_filter( 'update_option_'. TGGRSettings::SETTING_SLUG, __CLASS__ . '::obtain_bearer_token', 10, 2 );
+				update_option( TGGRSettings::SETTING_SLUG, $new_settings );
+				add_filter( 'update_option_'. TGGRSettings::SETTING_SLUG, __CLASS__ . '::obtain_bearer_token', 10, 2 );
+			}
+		}
+
+		/**
+		 * Converts a consumer key and consumer secret into bearer credentials
+		 * @mvc Model
+		 *
+		 * @param string $consumer_key
+		 * @param string $consumer_secret
+		 * @return string
+		 */
+		protected static function get_bearer_credentials( $consumer_key, $consumer_secret ) {
+			$credentials = urlencode( $consumer_key ) . ':' . urlencode( $consumer_secret );
+
+			return base64_encode( $credentials );
+		}
+
+		/**
+		 * Obtains a bearer token from the API
+		 * @mvc Model
+		 *
+		 * @param string $credentials
+		 * @return mixed string|false
+		 */
+		protected static function get_bearer_token( $credentials ) {
+			$token = json_decode( wp_remote_retrieve_body( wp_remote_post(
+				self::API_URL . '/oauth2/token',
+				array(
+					'headers' => array(
+						'Authorization' => 'Basic ' . $credentials,
+						'Content-Type'  => 'application/x-www-form-urlencoded;charset=UTF-8'
+					),
+					'body' => 'grant_type=client_credentials'
+				)
+			) ) );
+
+			if ( isset( $token->token_type ) && 'bearer' == $token->token_type ) {
+				$token = $token->access_token;
+			} else {
+				$token = false;
+			}
+
+			return $token;
+		}
+
+		/**
+		 * Fetches new items from an external sources and saves them as posts in the local database
+		 * @mvc Controller
+		 *
+		 * @param string $hashtag
+		 */
+		public function import_new_items( $hashtag ) {
+			$tweets = self::get_new_hashtagged_tweets(
+				TGGRSettings::get_instance()->settings[ __CLASS__ ]['_bearer_token'],
+				$hashtag,
+				TGGRSettings::get_instance()->settings[ __CLASS__ ]['_newest_tweet_id']
+			);
+
+			$this->import_new_posts( $this->convert_items_to_posts( $tweets, $hashtag ) );
+			self::update_newest_tweet_id( $hashtag );
+		}
+
+		/**
+		 * Retrieves tweets containing the given hashtag that were posted since the last import
+		 * @mvc Model
+		 *
+		 * @param string $bearer_token
+		 * @param string $hashtag
+		 * @param int $since_id The ID of the most recent tweet that is already saved in the database
+		 * @return mixed string|false
+		 */
+		protected static function get_new_hashtagged_tweets( $bearer_token, $hashtag, $since_id ) {
+			$tweets = false;
+
+			if ( ! $bearer_token ) {
+				self::obtain_bearer_token();
+				$bearer_token = TGGRSettings::get_instance()->settings[ __CLASS__ ]['_bearer_token'];
+			}
+
+			// probably need to include since_last_id or whatever. add that to params/phpdoc
+
+			// don't pull in more than ~20 at a time, but do it to that if there are 100 availble, you get 1-20, then 21-40, then 41-59, etc
+			// api already defaults to 15
+			// what if there are 30 new ones, does it give you the latest 15? probably, and that would skip the other 15
+			// maybe need cron job to run every 5 minutes and pull them in, so they don't get missed when nobody is hitting the page
+			// filter around those values
+
+			if ( $bearer_token && $hashtag && is_numeric( $since_id ) ) {
+				$url = self::API_URL . '/1.1/search/tweets.json?q=' . urlencode( $hashtag ) . '&since_id=' . urlencode( $since_id );
+
+				$response = json_decode( wp_remote_retrieve_body( wp_remote_get(
+					$url,
+					array(
+						'headers' => array(
+							'Authorization' => 'Bearer ' . $bearer_token,
+						),
+					)
+				) ) );
+
+				if ( isset( $response->statuses ) && ! empty( $response->statuses ) ) {
+					$tweets = $response->statuses;
+				}
+			}
+
+			return $tweets;
+		}
+
+		/**
+		 * Converts data from external source into a post/postmeta format so it can be saved in the local database
+		 * @mvc Model
+		 *
+		 * @param array $items
+		 * @param string $term
+		 * @return array
+		 */
+		public function convert_items_to_posts( $items, $term ) {
+			$posts = array();
+
+			// how to handle the tweet authors?
+				// don't want to store their info attached to the post, cause there could be multiple posts
+				// don't want to create actual wp users
+				// create a posttype for authors, and postmeta there?
+					// taxonomy for each service, or is that needed? yeah that's needed, well maybe not
+						// only strictly needed if trying to tie same user account together across services?
+						// but it'd still be good for organization even if don't need it?
+				// just attach as posstmeta to post for now
+
+
+			// validate data
+
+			if ( $items ) {
+				foreach ( $items as $item ) {
+					// if it's just an RT, skip it
+						// $item->retweeted_status
+						// not a blocker
+
+					$post_timestamp_gmt   = strtotime( $item->created_at );
+					$post_timestamp_local = self::convert_gmt_timestamp_to_local( $post_timestamp_gmt );
+
+					$post = array(
+						'post_author'   => TGGRMediaSource::$post_author_id,
+						'post_content'  => sanitize_text_field( $item->text ),	// todo maybe do wpkses instead if twitter is already sending html
+						'post_date'     => date( 'Y-m-d H:i:s', $post_timestamp_local ),
+						'post_date_gmt' => date( 'Y-m-d H:i:s', $post_timestamp_gmt ),
+						'post_status'   => 'publish',
+						'post_title'    => self::get_title_from_content( $item->text ),
+						'post_type'     => self::POST_TYPE_SLUG,
+					);
+
+					$post_meta = array(
+						'source_id'        => sanitize_text_field( $item->id ),
+						// permalink
+
+						'author_name'      => sanitize_text_field( $item->user->name ),
+						'author_username'  => sanitize_text_field( $item->user->screen_name ),
+						'author_url'       => isset( $item->user->entities->url->urls[0]->expanded_url ) ? esc_url( $item->user->entities->url->urls[0]->expanded_url ) : '',
+						'author_image_url' => esc_url( $item->user->profile_image_url ),
+					);
+
+
+					$attachment = array(
+						// not a blocker
+
+						//$item->entities->media[0]->type=='photo'
+						//->media_url
+
+						// add_image_size(s) for these?
+					);
+
+					$posts[] = array(
+						'post'       => $post,
+						'post_meta'  => $post_meta,
+						'term'       => $term,
+						'attachment' => $attachment,
+					);
+
+					/*
+					echo '<pre>';
+					print_r($item);
+					print_r($posts[0]);
+					wp_die();
+					*/
+				}
+			}
+
+			return $posts;
+		}
+
+		/**
+		 * Updates the _newest_tweet_id setting with the ID of the most recent
+		 * @mvc Model
+		 *
+		 * @param string $hashtag
+		 */
+		protected static function update_newest_tweet_id( $hashtag ) {
+			$latest_post = get_posts( array(
+				'posts_per_page'   => 1,
+				'order_by'         => 'date',
+				'post_type'        => self::POST_TYPE_SLUG,
+				'tax_query'        => array(
+					array(
+						'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
+						'field'    => 'slug',
+						'terms'    => str_replace( '#', '', $hashtag )
+					),
+				)
+			) );
+
+			if ( isset( $latest_post[0]->ID ) ) {
+				$source_id = get_post_meta( $latest_post[0]->ID, 'source_id', true );
+
+				if ( $source_id ) {
+					$settings = TGGRSettings::get_instance()->settings;
+					$settings[ __CLASS__ ]['_newest_tweet_id'] = $source_id;	// todo doesn't this need to be stored for each hashtag? only matters when multiple tags setup on same site, though
+					TGGRSettings::get_instance()->settings = $settings;
+				}
+			}
+		}
+
+		/**
+		 * Gathers the data that the media-item view will need
+		 * @mvc Model
+		 *
+		 * @param int $post_id
+		 * @return array
+		 */
+		public function get_item_view_data( $post_id ) {
+			$postmeta = get_post_custom( $post_id );
+			$necessary_data = array(
+				'author_name'      => $postmeta['author_name'][0],
+				'author_username'  => $postmeta['author_username'][0],
+				'author_url'       => $postmeta['author_url'][0],
+				'author_image_url' => $postmeta['author_image_url'][0],
+			);
+
+			return $necessary_data;
+		}
+	} // end TGGRSourceTwitter
+}
