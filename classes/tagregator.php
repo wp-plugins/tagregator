@@ -6,8 +6,6 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ )
 if ( ! class_exists( 'Tagregator' ) ) {
 	/**
 	 * Main / front controller class
-	 * Tagregator is an object-oriented/MVC base for building WordPress plugins
-	 *
 	 * @package Tagregator
 	 */
 	class Tagregator extends TGGRModule {
