@@ -255,7 +255,8 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 								update_post_meta( $post_id, $key, $value );
 							}
 
-							wp_set_object_terms( $post_id, $post['term'], self::TAXONOMY_HASHTAG_SLUG );
+							$term = get_term_by( 'name', $post['term_name'], self::TAXONOMY_HASHTAG_SLUG );
+							wp_set_object_terms( $post_id, $term->slug, self::TAXONOMY_HASHTAG_SLUG );
 
 							if ( $post['attachment'] ) {
 								// not a blocker

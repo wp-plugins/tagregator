@@ -313,7 +313,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 					$posts[] = array(
 						'post'       => $post,
 						'post_meta'  => $post_meta,
-						'term'       => $term,
+						'term_name'  => $term,
 						'attachment' => $attachment,
 					);
 

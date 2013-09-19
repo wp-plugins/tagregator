@@ -104,6 +104,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 				$post_types[] = $source::POST_TYPE_SLUG;
 			}
 
+			$term = get_term_by( 'name', $hashtag, TGGRMediaSource::TAXONOMY_HASHTAG_SLUG );
 			$items = get_posts( array(
 				'posts_per_page'   => apply_filters( Tagregator::PREFIX . 'media_items_per_page', 30 ),
 				'post_type'        => $post_types,
@@ -111,7 +112,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 					array(
 						'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
 						'field'    => 'slug',
-						'terms'    => str_replace( '#', '', $hashtag )
+						'terms'    => $term->slug,
 					),
 				),
 			) );
