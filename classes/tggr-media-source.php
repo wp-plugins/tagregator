@@ -256,6 +256,10 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 							}
 
 							$term = get_term_by( 'name', $post['term_name'], self::TAXONOMY_HASHTAG_SLUG );
+							if ( ! $term ) {
+								$term_id = wp_insert_term( $post['term_name'], self::TAXONOMY_HASHTAG_SLUG );
+								$term = get_term( $term_id, self::TAXONOMY_HASHTAG_SLUG );
+							}
 							wp_set_object_terms( $post_id, $term->slug, self::TAXONOMY_HASHTAG_SLUG );
 
 							if ( $post['attachment'] ) {

@@ -105,17 +105,19 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 			}
 
 			$term = get_term_by( 'name', $hashtag, TGGRMediaSource::TAXONOMY_HASHTAG_SLUG );
-			$items = get_posts( array(
-				'posts_per_page'   => apply_filters( Tagregator::PREFIX . 'media_items_per_page', 30 ),
-				'post_type'        => $post_types,
-				'tax_query'        => array(
-					array(
-						'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
-						'field'    => 'slug',
-						'terms'    => $term->slug,
+			if ( isset ( $term->slug ) ) {
+				$items = get_posts( array(
+					'posts_per_page'   => apply_filters( Tagregator::PREFIX . 'media_items_per_page', 30 ),
+					'post_type'        => $post_types,
+					'tax_query'        => array(
+						array(
+							'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
+							'field'    => 'slug',
+							'terms'    => $term->slug,
+						),
 					),
-				),
-			) );
+				) );
+			}
 
 			return $items;
 		}
