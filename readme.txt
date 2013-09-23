@@ -25,7 +25,9 @@ We're only able to only provide limited support. Please see [the FAQ](http://wor
 
 == Installation ==
 
-After installing the plugin, [add the [tagregator] shortcode to a post or page](http://codex.wordpress.org/Shortcode), and include the hashtag you want to aggregate:
+Step 1) After installing the plugin, go to the Tagregator > Settings screen and enter the credentials for the services you want to use.
+
+Step 2) [Add the [tagregator] shortcode to a post or page](http://codex.wordpress.org/Shortcode), and include the hashtag you want to aggregate:
 
 Examples:
 
@@ -46,9 +48,16 @@ You can also enter keywords or search queries, like this:
 == Frequently Asked Questions ==
 
 = Do you provide support for this plugin? =
-We created this plugin to scratch our own itch, and are happy to offer the code to the community in the spirit of open source. We are only able to provide limited support, however. If you find a legitimate bug or security vulnerability\*, please let us know; we take those seriously and will fix them. On the other hand, if you're just having trouble using the plugin, or making it fit your specific needs, then you'll need to solve the problem yourself, hire a developer, or get help from the community.
+We created this plugin to scratch our own itch, and are happy to offer the code to the community in the spirit of open source. We are only able to provide limited support, however. If you find a legitimate bug or security vulnerability\*, please let us know; we take those seriously and will fix them.
+
+On the other hand, if you're just having trouble using the plugin, or making it fit your specific needs, then you'll need to solve the problem yourself, hire a developer, or get help from the community.
 
 \* If you do find a security issue, please disclose it to us privately by sending an e-mail to security@wordpress.org, so that we can release a fix for it before you publish your findings.
+
+
+= I setup the shortcode, but no posts have been imported =
+
+When setting it up the first time, make sure you wait 30-60 seconds in order to let the plugin pull in the first round of posts.
 
 
 = Why do posts show up with the wrong time? =
@@ -60,12 +69,16 @@ Twitter's API doesn't guarantee that every tweet will be available in the result
 
 
 == Screenshots ==
+
 1. An example of how the social media stream looks
 2. The settings panel
 3. The social media items stored as a custom post type
 
 
 == Changelog ==
+
+= v0.2 () =
+* [FIX] No longer assuming that term slug matches sanitized version of term name. Fixes bug where Tagregator term would be created with "-2" and would never get posts.
 
 = v0.1 (9/17/2013) =
 * [NEW] Initial release
