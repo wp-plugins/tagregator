@@ -19,9 +19,6 @@ Tagregator lets you add a shortcode to a post or page on your site, and pull in 
 * Instagram -- planned for upcoming release
 * Flickr -- planned for future release
 
-= Support Expectations: =
-We're only able to only provide limited support. Please see [the FAQ](http://wordpress.org/plugins/tagregator/faq/) for details.
-
 
 == Installation ==
 
@@ -47,25 +44,17 @@ You can also enter keywords or search queries, like this:
 
 == Frequently Asked Questions ==
 
-= Do you provide support for this plugin? =
-We created this plugin to scratch our own itch, and are happy to offer the code to the community in the spirit of open source. We are only able to provide limited support, however. If you find a legitimate bug or security vulnerability\*, please let us know; we take those seriously and will fix them.
-
-On the other hand, if you're just having trouble using the plugin, or making it fit your specific needs, then you'll need to solve the problem yourself, hire a developer, or get help from the community.
-
-\* If you do find a security issue, please disclose it to us privately by sending an e-mail to security@wordpress.org, so that we can release a fix for it before you publish your findings.
-
-
 = I setup the shortcode, but no posts have been imported =
-
 When setting it up the first time, make sure you wait 30-60 seconds in order to let the plugin pull in the first round of posts.
 
-
 = Why do posts show up with the wrong time? =
-
 This is probably because you haven't configured your timezone in WordPress's General Settings. After updating the timezone, you may need to wait up to 23 hours for new posts to appear ahead of the ones that were saved with the old timezone.
 
 = Why are some Tweets missing? =
 Twitter's API doesn't guarantee that every tweet will be available in the results it returns.
+
+= How should I disclose security vulnerabilities? =
+If you find a security issue, please disclose it to us privately by sending an e-mail to security@wordpress.org, so that we can release a fix for it before you publish your findings.
 
 
 == Screenshots ==
