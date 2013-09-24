@@ -259,18 +259,6 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 		public function convert_items_to_posts( $items, $term ) {
 			$posts = array();
 
-			// how to handle the tweet authors?
-				// don't want to store their info attached to the post, cause there could be multiple posts
-				// don't want to create actual wp users
-				// create a posttype for authors, and postmeta there?
-					// taxonomy for each service, or is that needed? yeah that's needed, well maybe not
-						// only strictly needed if trying to tie same user account together across services?
-						// but it'd still be good for organization even if don't need it?
-				// just attach as posstmeta to post for now
-
-
-			// validate data
-
 			if ( $items ) {
 				foreach ( $items as $item ) {
 					// if it's just an RT, skip it
@@ -282,7 +270,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 
 					$post = array(
 						'post_author'   => TGGRMediaSource::$post_author_id,
-						'post_content'  => sanitize_text_field( $item->text ),	// todo maybe do wpkses instead if twitter is already sending html
+						'post_content'  => wp_kses( $item->text, wp_kses_allowed_html( 'data' ), array( 'http', 'https', 'mailto' ) ),
 						'post_date'     => date( 'Y-m-d H:i:s', $post_timestamp_local ),
 						'post_date_gmt' => date( 'Y-m-d H:i:s', $post_timestamp_gmt ),
 						'post_status'   => 'publish',
@@ -316,13 +304,6 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 						'term_name'  => $term,
 						'attachment' => $attachment,
 					);
-
-					/*
-					echo '<pre>';
-					print_r($item);
-					print_r($posts[0]);
-					wp_die();
-					*/
 				}
 			}
 
