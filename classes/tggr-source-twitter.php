@@ -261,9 +261,9 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 
 			if ( $items ) {
 				foreach ( $items as $item ) {
-					// if it's just an RT, skip it
-						// $item->retweeted_status
-						// not a blocker
+					if ( isset( $item->retweeted_status ) && apply_filters( Tagregator::PREFIX . 'skip_retweets', true ) ) {
+						continue;
+					}
 
 					$post_timestamp_gmt   = strtotime( $item->created_at );
 					$post_timestamp_local = self::convert_gmt_timestamp_to_local( $post_timestamp_gmt );
