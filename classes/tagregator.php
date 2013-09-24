@@ -174,15 +174,4 @@ if ( ! class_exists( 'Tagregator' ) ) {
 			}
 		}
 	} // end Tagregator
-
-
-	// Includes and modules
-	require_once( dirname( __FILE__ ) . '/tggr-settings.php' );
-	require_once( dirname( __FILE__ ) . '/tggr-shortcode-tagregator.php' );
-
-	// Media sources
-	require_once( dirname( __FILE__ ) . '/tggr-media-source.php' );
-	require_once( dirname( __FILE__ ) . '/tggr-source-twitter.php' );
-	//require_once( dirname( __FILE__ ) . '/tggr-source-instagram.php' );
-	//require_once( dirname( __FILE__ ) . '/tggr-source-flickr.php' );
 }

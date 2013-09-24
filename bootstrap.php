@@ -42,16 +42,30 @@ function tggr_requirements_error() {
 	require_once( dirname( __FILE__ ) . '/views/requirements-error.php' );
 }
 
+/**
+ * Loads all the files that make up Tagregator
+ */
+function tggr_include_files() {
+	require_once( dirname( __FILE__ ) . '/classes/tggr-module.php' );
+	require_once( dirname( __FILE__ ) . '/classes/tagregator.php' );
+	require_once( dirname( __FILE__ ) . '/classes/tggr-settings.php' );
+	require_once( dirname( __FILE__ ) . '/classes/tggr-shortcode-tagregator.php' );
+	require_once( dirname( __FILE__ ) . '/classes/tggr-media-source.php' );
+	require_once( dirname( __FILE__ ) . '/classes/tggr-source-twitter.php' );
+	//require_once( dirname( __FILE__ ) . '/classes/tggr-source-instagram.php' );
+	//require_once( dirname( __FILE__ ) . '/classes/tggr-source-flickr.php' );
+}
+
 /*
  * Check requirements and load main class
  * The main program needs to be in a separate file that only gets loaded if the plugin requirements are met. Otherwise older PHP installations could crash when trying to parse it.
  */
 if ( tggr_requirements_met() ) {
-	require_once( dirname( __FILE__ ) . '/classes/tggr-module.php' );
-	require_once( dirname( __FILE__ ) . '/classes/tagregator.php' );
+	tggr_include_files();
 
 	if ( class_exists( 'Tagregator' ) ) {
 		$GLOBALS['tggr'] = Tagregator::get_instance();
+
 		register_activation_hook(   __FILE__, array( $GLOBALS['tggr'], 'activate' ) );
 		register_deactivation_hook( __FILE__, array( $GLOBALS['tggr'], 'deactivate' ) );
 	}
