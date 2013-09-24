@@ -351,5 +351,23 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 		 * @return array
 		 */
 		abstract public function get_item_view_data( $post_id );
+
+		/**
+		 * Converts URLs inside a block of text into hyperlinks
+		 * @mvc Model
+		 *
+		 * @param string $content
+		 * @return string
+		 */
+		public static function convert_urls_to_links( $content ) {
+			global $post;
+			$class = get_called_class();
+
+			if ( isset( $post->post_type ) && $class::POST_TYPE_SLUG == $post->post_type ) {
+				$content = make_clickable( $content );
+			}
+
+			return $content;
+		}
 	} // end TGGRModule
 }

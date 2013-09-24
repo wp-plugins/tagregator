@@ -64,6 +64,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 
 			add_filter( Tagregator::PREFIX . 'default_settings',      __CLASS__ . '::register_default_settings' );
 			add_filter( 'update_option_'. TGGRSettings::SETTING_SLUG, __CLASS__ . '::obtain_bearer_token', 10, 2 );
+			add_filter( 'the_content',                                __CLASS__ . '::convert_urls_to_links' );
 		}
 
 		/**
