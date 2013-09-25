@@ -1,50 +1,65 @@
 == Highest Priority ==
-* chrome layout issues. related to column width
+* "TypeError: a is undefined" JS error on twentythirteen
 * test
 	w/ really active twitter hashtag to get real world data
 	w/ different hashtags. some w/ recent data, some with only old. some w/ constant new tweets, some w/ only a few. make sure all tweets are pulled into db and displayed
 	diff browsers, mobile devices
 * posts duplicated in db. refresh chrome and ff at same time to reproduce
 	* even after fix this, maybe add cron job to remove duplicate posts that slip through?
-* "TypeError: a is undefined" JS error on twentythirteen
+* chrome layout issues. related to column width
+	* hold off, maybe switching to single-column layout anyway
 
 
 == High Priority ==
-* release on wporg plugin repo
 * responsive layouts. maybe make # of columns automatic instead of hardcode? no, still want it, but maybe make it max columns. some kind of min-width to force it to go 1 column on mobile
 * sideload and display twitter photos
 	* masonry imagesLoaded
-* Fix calculateMediaItemWidth()
 * i18n
 * https://dev.twitter.com/terms/display-requirements
 	https://dev.twitter.com/docs/image-resources
 	including "on" states
 	https://dev.twitter.com/docs/follow-button
 	https://dev.twitter.com/docs/intents
-* convert urls in content to links. make_clickable()
-* skip retweets
-* if a term already exists for the a hashtag in a different taxonomy, the slug will be "hashtag-2" and posts won't pull. get slug dynamically isntead of assuming
+* Fix calculateMediaItemWidth(). maybe not now if shifting to 1column layout
+
+
+== Contributions / Feedback ==
+* replace PREFIX w/ "tggr" in places users will expect, like filter names. makes it easier for someone to grep the code for something they're looking for. maybe remove the constant completely.
+* in classes, just `return` if class_exists(). then don't have to indent everything another level
+* george instagram, etc
+* switch to 1 column default layout
+* incorportate the user's bg image, like http://vaultpress.com/what-theyre-saying/
+* use http://fortawesome.github.io/Font-Awesome/ for icons instead of the images
+* hide Hashtag menu b/c just confuses people? http://wordpress.org/support/topic/unclear-installation-instructions?replies=1#post-4685223
+* add debugging options to figure out what's going on in each step. maybe if isset $_get['tggr_debug'] and current_user_can(manage_options), console.log( $response['debug'] ) array
+* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check. or try to do it in php before page loads
 
 
 == Medium Priority ==
+* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check. maybe do a save_post callback and do it then? pull from all sources instead of just 1
 * cron to save posts when no one viewing page. but how will it know which tags to get? hae to scan all posts/pages for shortcodes? maybe when the shortcode loads, it adds the current $post->ID to a _protected setting. then periodically empty the array so it doesn't keep pulling old ones after they're removed from the shortcode
-* classes for instagram and flickr
-* add meta boxes to posts to show extra fields, and save values
-* postmeta key to display/hide a post
-* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check
-* make Hashtags taxonomy edit page expand Tagregator menu when active instead of Posts menu
-* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check
-* only load css/js on shortcode page
-* if get tweets requests fails b/c of bad auth, obtain new bearer token
-* when calling api, maybe detect if no posts (so know it's first time), and then try to go back and get lots more, so that you get items from before the plugin was activated
-* maybe remove items from the bottom of the container once you reach ~100 items, so the page doesn't get too long and memory bloated
-* maybe not humantimediff in media iteam b/c unless you constantly update it dynamically, they're all gonna say "1 min ago" eventually. could add timestamp as data-timestamp attribute, then have js go through and recalc all. but would need js equiv for humantimediff
+* class for instagram
+* class for flickr
+* class for vine
 * support pulling from usernames
 * support multiple hashtags,usernames on one page
 * infinite scroll? so you can see what happened earlier
+* add meta boxes to posts to show extra fields, and save values
+* postmeta key to display/hide a post
+* make Hashtags taxonomy edit page expand Tagregator menu when active instead of Posts menu
+* only load css/js on shortcode page
+* if get tweets requests fails b/c of bad auth, obtain new bearer token
+* when calling api, maybe detect if no posts (so know it's first time), and then try to go back and get lots more, so that you get items from before the plugin was activated. twitter only provides a few days
+* maybe remove items from the bottom of the container once you reach ~100 items, so the page doesn't get too long and memory bloated
+* maybe not humantimediff in media iteam b/c unless you constantly update it dynamically, they're all gonna say "1 min ago" eventually. could add timestamp as data-timestamp attribute, then have js go through and recalc all. but would need js equiv for humantimediff
 * don't want this page to get cached? b/c when update, it'll output a huge amount of posts on the first ajax call
 	* no, b/c cache generated before new posts added?
 * register_page_settings() - add &post_type=[?] ? but would want it for all of them, but if leave off then it assumes it's 'post'
+* move menu to 20.53 (or something like that) instead of default position? avoid conflicts w/ other submenus
+* prefix postmeta with _ so users won't edit. will have to migrate existing during upgrade?
+* add ability to upload directly from wordpress, rather than using social media
+* maybe call something like register_parent_hooks() inside each media source register_hook_callbacks() function, for things that they'll all do, like convert_urls_to_links()
+
 
 
 == Low Priority ==
@@ -60,3 +75,5 @@
 * create_post_author() - todo if multisite, make sure exists on current blog
 * update_newest_tweet_id() - support multiple hashtags
 * get_new_hashtagged_tweets() - if response code is 'over limit', then decrease refresh period? log it too
+* seems like maybe some ajax calls should be bringing new ones in, but they don't as often as they should. maybe bug w/ race condition checks or other area.
+* don't store tweet/photo/etc authors as postmeta? because creates redundant data. better to map them to something that's normalized
