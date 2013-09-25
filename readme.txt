@@ -22,9 +22,13 @@ Tagregator lets you add a shortcode to a post or page on your site, and pull in 
 
 == Installation ==
 
-Step 1) After installing the plugin, go to the Tagregator > Settings screen and enter the credentials for the services you want to use.
+For help installing this (or any other) WordPress plugin, please read the [Managing Plugins](http://codex.wordpress.org/Managing_Plugins) article on the Codex.
 
-Step 2) [Add the [tagregator] shortcode to a post or page](http://codex.wordpress.org/Shortcode), and include the hashtag you want to aggregate:
+**Step 1)** After installing the plugin, go to the Tagregator > Settings screen and enter the credentials for the services you want to use.
+
+When <a href="https://dev.twitter.com/apps/new">creating a Twitter application</a>, you should enter the URL of your website in the "Website" field (e.g., `http://www.example.org`), and then leave the "Callback URL" field empty. Once the application is created, copy the Consumer Key and Consumer Secret into Tagregator's settings.
+
+**Step 2)** [Add the [tagregator] shortcode to a post or page](http://codex.wordpress.org/Shortcode), and include the hashtag you want to aggregate:
 
 Examples:
 
@@ -40,6 +44,8 @@ You can also enter keywords or search queries, like this:
 `[tagregator hashtag="cooking"]`
 
 `[tagregator hashtag="ice cream"]`
+
+**Step 3)** Wait 30-60 seconds for the plugin to pull new content in.
 
 
 == Frequently Asked Questions ==
@@ -68,6 +74,11 @@ If you find a security issue, please disclose it to us privately by sending an e
 
 = v0.2 () =
 * [FIX] No longer assuming that term slug matches sanitized version of term name. Fixes bug where Tagregator term would be created with "-2" and would never get posts.
+* [NEW] Retweets are no longer imported.
+* [NEW] URLs inside posts are now converted to hyperlinks.
+* [UPDATE] Tweet content sanitized with wp_kses() instead of sanitize_text_field().
+* [UPDATE] Moved all includes to bootstrapper.
+
 
 = v0.1 (9/17/2013) =
 * [NEW] Initial release
