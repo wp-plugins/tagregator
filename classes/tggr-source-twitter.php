@@ -287,23 +287,25 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 						'author_username'  => sanitize_text_field( $item->user->screen_name ),
 						'author_url'       => isset( $item->user->entities->url->urls[0]->expanded_url ) ? esc_url( $item->user->entities->url->urls[0]->expanded_url ) : '',
 						'author_image_url' => esc_url( $item->user->profile_image_url ),
+						'media'            => array(),
 					);
 
-
-					$attachment = array(
-						// not a blocker
-
-						//$item->entities->media[0]->type=='photo'
-						//->media_url
-
-						// add_image_size(s) for these?
-					);
+					if ( isset ( $item->entities->media ) ) {
+						foreach ( $item->entities->media as $media_item ) {
+							if ( 'photo' == $media_item->type ) {
+								$post_meta['media'][] = array(
+									'id'   => sanitize_text_field( $media_item->id_str ),
+									'url'  => esc_url_raw( $media_item->media_url ),
+									'type' => 'image',
+								);
+							}
+						}
+					}
 
 					$posts[] = array(
 						'post'       => $post,
 						'post_meta'  => $post_meta,
 						'term_name'  => $term,
-						'attachment' => $attachment,
 					);
 				}
 			}
@@ -356,6 +358,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 				'author_username'  => $postmeta['author_username'][0],
 				'author_url'       => $postmeta['author_url'][0],
 				'author_image_url' => $postmeta['author_image_url'][0],
+				'media'            => isset( $postmeta['media'][0] ) ? maybe_unserialize( $postmeta['media'][0] ) : array(),
 			);
 
 			return $necessary_data;

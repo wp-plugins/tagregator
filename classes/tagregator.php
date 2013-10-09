@@ -153,9 +153,17 @@ if ( ! class_exists( 'Tagregator' ) ) {
 			);
 
 			wp_register_script(
+				'images-loaded',
+				plugins_url( 'includes/masonry/imagesloaded.pkgd.min.js', dirname( __FILE__ ) ),
+				array( 'jquery', 'masonry' ),
+				self::VERSION,
+				true
+			);
+
+			wp_register_script(
 				self::PREFIX . 'front-end',
 				plugins_url( 'javascript/front-end.js', dirname( __FILE__ ) ),
-				array( 'jquery', 'masonry' ),
+				array( 'jquery', 'masonry', 'images-loaded' ),
 				self::VERSION,
 				true
 			);

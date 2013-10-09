@@ -74,6 +74,7 @@ If you find a security issue, please disclose it to us privately by sending an e
 
 = v0.2 () =
 * [FIX] No longer assuming that term slug matches sanitized version of term name. Fixes bug where Tagregator term would be created with "-2" and would never get posts.
+* [NEW] Images attached to Tweets are now displayed.
 * [NEW] Retweets are no longer imported.
 * [NEW] URLs inside posts are now converted to hyperlinks.
 * [UPDATE] Tweet content sanitized with wp_kses() instead of sanitize_text_field().
@@ -85,6 +86,9 @@ If you find a security issue, please disclose it to us privately by sending an e
 
 
 == Upgrade Notice ==
+
+= 0.2 =
+Version 0.2 displayed images attached to tweets.
 
 = 0.1 =
 Initial release.

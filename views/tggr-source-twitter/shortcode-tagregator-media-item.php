@@ -17,6 +17,14 @@
 
 
 	<div class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>item-content">
+		<?php if ( $media ) : ?>
+			<?php foreach ( $media as $media_item ) : ?>
+				<?php if ( 'image' == $media_item['type'] ) : ?>
+					<img src="<?php echo esc_url( $media_item['url'] ); ?>:small" alt="" />
+				<?php endif; ?>
+			<?php endforeach; ?>
+		<?php endif; ?>
+		
 		<?php the_content(); ?>
 	</div>
 

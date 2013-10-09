@@ -261,13 +261,6 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 								$term = get_term( $term_id, self::TAXONOMY_HASHTAG_SLUG );
 							}
 							wp_set_object_terms( $post_id, $term->slug, self::TAXONOMY_HASHTAG_SLUG );
-
-							if ( $post['attachment'] ) {
-								// not a blocker
-
-								// if attachments, sideload
-								// set as featured image
-							}
 						}
 					}
 				}

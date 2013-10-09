@@ -25,6 +25,12 @@ function tggrWrapper( $ ) {
 				transitionDuration: '1s'
 			} );
 
+			// The layout is drawn immediately after the page has rendered to setup the initial layout, then again once all images have finished loading to account for the changing element sizes
+			$( tggr.mediaItemContainer ).imagesLoaded( function() {
+				$( tggr.mediaItemContainer ).masonry( 'reloadItems' );
+				$( tggr.mediaItemContainer ).masonry( 'layout' );
+			} );
+
 			setInterval( tggr.retrieveNewItems, tggrData.refreshInterval * 1000 );	// convert to milliseconds
 		},
 
@@ -91,6 +97,12 @@ function tggrWrapper( $ ) {
 			$( tggr.mediaItemContainer ).prepend( new_items_markup );
 			$( tggr.mediaItemContainer ).masonry( 'reloadItems' );
 			$( tggr.mediaItemContainer ).masonry( 'layout' );
+			
+			// The layout is redrawn immediately after adding the new elements to avoid overlapping elements, then again once all images have finished loading to account for the changing element sizes
+			$( tggr.mediaItemContainer ).imagesLoaded( function() {
+				$( tggr.mediaItemContainer ).masonry( 'reloadItems' );
+				$( tggr.mediaItemContainer ).masonry( 'layout' );
+			} );
 
 			$( '#' + tggr.cssPrefix + 'no-posts-available' ).hide();
 			tggr.existingItemIDs = tggr.getExistingItemIDs();
