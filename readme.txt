@@ -4,7 +4,7 @@ Donate link:       http://wordpressfoundation.org
 Tags:              hashtag, social media, aggregation, stream
 Requires at least: 3.5
 Tested up to:      3.6
-Stable tag:        0.1
+Stable tag:        0.2
 License:           GPLv2 or Later
 
 Aggregates hashtagged content from multiple social media sites into a single stream.
@@ -80,7 +80,6 @@ If you find a security issue, please disclose it to us privately by sending an e
 * [UPDATE] Tweet content sanitized with wp_kses() instead of sanitize_text_field().
 * [UPDATE] Moved all includes to bootstrapper.
 
-
 = v0.1 (9/17/2013) =
 * [NEW] Initial release
 
@@ -88,7 +87,7 @@ If you find a security issue, please disclose it to us privately by sending an e
 == Upgrade Notice ==
 
 = 0.2 =
-Version 0.2 displayed images attached to tweets.
+Version 0.2 displayed images attached to tweets and ignores retweets.
 
 = 0.1 =
 Initial release.

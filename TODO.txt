@@ -1,26 +1,17 @@
-== Highest Priority ==
-* "TypeError: a is undefined" JS error on twentythirteen
-* test
-	w/ really active twitter hashtag to get real world data
-	w/ different hashtags. some w/ recent data, some with only old. some w/ constant new tweets, some w/ only a few. make sure all tweets are pulled into db and displayed
-	diff browsers, mobile devices
-* posts duplicated in db. refresh chrome and ff at same time to reproduce
-	* even after fix this, maybe add cron job to remove duplicate posts that slip through?
-* chrome layout issues. related to column width
-	* hold off, maybe switching to single-column layout anyway
-
-
 == High Priority ==
-* responsive layouts. maybe make # of columns automatic instead of hardcode? no, still want it, but maybe make it max columns. some kind of min-width to force it to go 1 column on mobile
-* sideload and display twitter photos
-	* masonry imagesLoaded
 * i18n
 * https://dev.twitter.com/terms/display-requirements
 	https://dev.twitter.com/docs/image-resources
 	including "on" states
 	https://dev.twitter.com/docs/follow-button
 	https://dev.twitter.com/docs/intents
-* Fix calculateMediaItemWidth(). maybe not now if shifting to 1column layout
+
+* responsive layouts. maybe make # of columns automatic instead of hardcode? no, still want it, but maybe make it max columns. some kind of min-width to force it to go 1 column on mobile
+* Fix calculateMediaItemWidth(). 
+	* maybe not now if shifting to 1column layout
+* "TypeError: a is undefined" JS error on twentythirteen
+* chrome layout issues. related to column width
+	* hold off, maybe switching to single-column layout anyway
 
 
 == Contributions / Feedback ==
@@ -32,7 +23,7 @@
 * use http://fortawesome.github.io/Font-Awesome/ for icons instead of the images
 * hide Hashtag menu b/c just confuses people? http://wordpress.org/support/topic/unclear-installation-instructions?replies=1#post-4685223
 * add debugging options to figure out what's going on in each step. maybe if isset $_get['tggr_debug'] and current_user_can(manage_options), console.log( $response['debug'] ) array
-* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check. or try to do it in php before page loads
+* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check, or if container is empty, or just do it always when page loads. or try to do it in php before page loads. 
 
 
 == Medium Priority ==
