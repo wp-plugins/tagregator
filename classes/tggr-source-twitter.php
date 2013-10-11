@@ -282,8 +282,6 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 
 					$post_meta = array(
 						'source_id'        => sanitize_text_field( $item->id ),
-						// permalink
-
 						'author_name'      => sanitize_text_field( $item->user->name ),
 						'author_username'  => sanitize_text_field( $item->user->screen_name ),
 						'author_url'       => isset( $item->user->entities->url->urls[0]->expanded_url ) ? esc_url( $item->user->entities->url->urls[0]->expanded_url ) : '',
@@ -375,6 +373,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 		public function get_item_view_data( $post_id ) {
 			$postmeta = get_post_custom( $post_id );
 			$necessary_data = array(
+				'tweet_id'         => $postmeta['source_id'][0],
 				'author_name'      => $postmeta['author_name'][0],
 				'author_username'  => $postmeta['author_username'][0],
 				'author_url'       => $postmeta['author_url'][0],

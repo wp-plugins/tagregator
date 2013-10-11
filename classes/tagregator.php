@@ -145,33 +145,25 @@ if ( ! class_exists( 'Tagregator' ) ) {
 		 */
 		public static function load_resources() {
 			wp_register_script(
-				'masonry',
-				plugins_url( 'includes/masonry/masonry.pkgd.min.js', dirname( __FILE__ ) ),
+				self::PREFIX . 'front-end',
+				plugins_url( 'javascript/front-end.js', dirname( __FILE__ ) ),
 				array( 'jquery' ),
 				self::VERSION,
 				true
 			);
 
-			wp_register_script(
-				'images-loaded',
-				plugins_url( 'includes/masonry/imagesloaded.pkgd.min.js', dirname( __FILE__ ) ),
-				array( 'jquery', 'masonry' ),
-				self::VERSION,
-				true
-			);
-
-			wp_register_script(
-				self::PREFIX . 'front-end',
-				plugins_url( 'javascript/front-end.js', dirname( __FILE__ ) ),
-				array( 'jquery', 'masonry', 'images-loaded' ),
-				self::VERSION,
-				true
+			wp_register_style(
+				'font-awesome',
+				plugins_url( 'includes/font-awesome/css/font-awesome.min.css', dirname( __FILE__ ) ),
+				array(),
+				'3.2.1',
+				'all'
 			);
 
 			wp_register_style(
 				self::PREFIX . 'front-end',
 				plugins_url( 'css/front-end.css', dirname( __FILE__ ) ),
-				array(),
+				array( 'font-awesome' ),
 				self::VERSION,
 				'all'
 			);

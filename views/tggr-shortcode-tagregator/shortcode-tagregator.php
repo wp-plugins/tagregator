@@ -16,7 +16,6 @@
 	var tggrData = {
 		ajaxPostURL:     '<?php echo admin_url( 'admin-ajax.php' ); ?>',
 		hashtag:         '<?php echo esc_js( $attributes['hashtag'] ); ?>',
-		refreshInterval: <?php echo esc_js( $this->refresh_interval ); ?>,
-		numberOfColumns: <?php echo esc_js( apply_filters( Tagregator::PREFIX . 'number_of_columns', 3 ) ); ?>
+		refreshInterval: <?php echo esc_js( $this->refresh_interval ); ?>
 	};
 </script>
