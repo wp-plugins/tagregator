@@ -65,6 +65,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 			add_filter( Tagregator::PREFIX . 'default_settings',      __CLASS__ . '::register_default_settings' );
 			add_filter( 'update_option_'. TGGRSettings::SETTING_SLUG, __CLASS__ . '::obtain_bearer_token', 10, 2 );
 			add_filter( 'the_content',                                __CLASS__ . '::convert_urls_to_links' );
+			add_filter( 'the_content',                                __CLASS__ . '::link_hashtags_and_usernames' );
 		}
 
 		/**
@@ -311,6 +312,26 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 			}
 
 			return $posts;
+		}
+
+		/**
+		 * Convert usernames and hashtags to links
+		 * @mvc Model
+		 * 
+		 * @link http://snipplr.com/view.php?codeview&id=28482 Based on
+		 * @link https://gist.github.com/georgestephanis/6567420 Based on
+		 * @param string $text
+		 * @return string
+		 */
+		public static function link_hashtags_and_usernames( $content ) {
+			global $post;
+
+			if ( isset( $post->post_type ) && self::POST_TYPE_SLUG == $post->post_type ) {
+				$content = preg_replace( "/@(\w+)/", "<a href=\"https://twitter.com/\\1\" class=\"". self::POST_TYPE_SLUG ."-username\">@\\1</a>", $content );
+				$content = preg_replace( "/(?<!&)#(\w+)/", "<a href=\"https://twitter.com/search?q=\\1\" class=\"". self::POST_TYPE_SLUG ."-tag\">#\\1</a>", $content );
+			}
+			
+			return $content;
 		}
 
 		/**
