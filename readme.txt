@@ -72,7 +72,10 @@ If you find a security issue, please disclose it to us privately by sending an e
 
 == Changelog ==
 
-= v0.2 () =
+= v0.3 () =
+* [FIX] Fixed "tggrData is not defined" bug.
+
+= v0.2 (10/9/2013) =
 * [FIX] No longer assuming that term slug matches sanitized version of term name. Fixes bug where Tagregator term would be created with "-2" and would never get posts.
 * [NEW] Images attached to Tweets are now displayed.
 * [NEW] Retweets are no longer imported.

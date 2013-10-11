@@ -1,4 +1,11 @@
 == High Priority ==
+* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. 
+	can detect presents on the #tggr-no-posts-found element to check, 
+	or if container is empty, 
+	or just do it always when page loads. 
+	or try to do it in php before page loads.
+* on first setup (and probably later) not pulling in new posts the first few times. have to make muliple ajax requests. problems w/ the race condition blockers?
+* class for instagram
 * i18n
 * https://dev.twitter.com/terms/display-requirements
 	https://dev.twitter.com/docs/image-resources
@@ -23,13 +30,11 @@
 * use http://fortawesome.github.io/Font-Awesome/ for icons instead of the images
 * hide Hashtag menu b/c just confuses people? http://wordpress.org/support/topic/unclear-installation-instructions?replies=1#post-4685223
 * add debugging options to figure out what's going on in each step. maybe if isset $_get['tggr_debug'] and current_user_can(manage_options), console.log( $response['debug'] ) array
-* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check, or if container is empty, or just do it always when page loads. or try to do it in php before page loads. 
-
+ 
 
 == Medium Priority ==
 * when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check. maybe do a save_post callback and do it then? pull from all sources instead of just 1
 * cron to save posts when no one viewing page. but how will it know which tags to get? hae to scan all posts/pages for shortcodes? maybe when the shortcode loads, it adds the current $post->ID to a _protected setting. then periodically empty the array so it doesn't keep pulling old ones after they're removed from the shortcode
-* class for instagram
 * class for flickr
 * class for vine
 * support pulling from usernames
@@ -68,3 +73,5 @@
 * get_new_hashtagged_tweets() - if response code is 'over limit', then decrease refresh period? log it too
 * seems like maybe some ajax calls should be bringing new ones in, but they don't as often as they should. maybe bug w/ race condition checks or other area.
 * don't store tweet/photo/etc authors as postmeta? because creates redundant data. better to map them to something that's normalized
+* use core copy of masonry instead of your own
+	* but it's old and you get $bricks is undefined error.
