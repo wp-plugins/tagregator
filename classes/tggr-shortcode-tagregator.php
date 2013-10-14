@@ -13,6 +13,8 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		protected $refresh_interval, $post_types_to_class_names, $view_folder;		// $refresh_interval is in seconds
 		protected static $readable_properties  = array( 'refresh_interval', 'view_folder' );
 		protected static $writeable_properties = array( 'refresh_interval' );
+		
+		const SHORTCODE_NAME = 'tagregator';
 
 		/**
 		 * Constructor
@@ -45,10 +47,11 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		 */
 		public function register_hook_callbacks() {
 			add_action( 'init',                                                              array( $this, 'init' ) );
+			add_action( 'save_post',                                                         array( $this, 'prefetch_media_items' ), 10, 2 );
 			add_action( 'wp_ajax_'.        Tagregator::PREFIX . 'render_latest_media_items', array( $this, 'render_latest_media_items' ) );
 			add_action( 'wp_ajax_nopriv_'. Tagregator::PREFIX . 'render_latest_media_items', array( $this, 'render_latest_media_items' ) );
 
-			add_shortcode( 'tagregator',                                                     array( $this, 'shortcode_tagregator' ) );
+			add_shortcode( self::SHORTCODE_NAME,                                             array( $this, 'shortcode_tagregator' ) );
 		}
 
 		/**
@@ -148,25 +151,35 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		/**
 		 * Imports the latest items from media sources
 		 * @mvc Controller
+		 * 
+		 * @param string $hashtag
+		 * @param string $rate_limit 'respect' to enforce the rate limit, or 'ignore' to ignore it
+		 * @param string $media_sources 'staggered' to only call a single source, or 'all' to call all sources
 		 */
-		protected function import_new_items( $hashtag ) {
+		protected function import_new_items( $hashtag, $rate_limit = 'respect', $media_sources = 'staggered' ) {
 			$last_fetch = get_transient( Tagregator::PREFIX . 'last_media_fetch', 0 );
 
-			if ( self::refresh_interval_elapsed( $last_fetch, $this->refresh_interval ) ) {
+			if ( 'ignore' == $rate_limit || self::refresh_interval_elapsed( $last_fetch, $this->refresh_interval ) ) {
 				set_transient( Tagregator::PREFIX . 'last_media_fetch', microtime( true ) );	// do this right away to minimize the chance of race conditions
 
-				/*
-				 * maybe don't fetch from all 3+ at once. maybe each ajax call, only fetch from 1 of them, but do the calls every 15 seconds instead of 30 or something
+				if ( 'staggered' == $media_sources ) {
+					// todo make dynamic when adding instagram/flickr
+					/*
+					 * maybe don't fetch from all 3+ at once. maybe each ajax call, only fetch from 1 of them, but do the calls every 15 seconds instead of 30 or something
 					if try to do them all at once, and 1 of them times out, then might break the whole thing
 					also enforce limit on server side b/c will have multiple browsers hitting page at same time, don't want to have 20 requests to twitter b/c 20 people viewing page
-				 */
-				// pick the module that has gone the longest w/out refreshing
-				// maybe instead of the transient, have an option store the last update attempt (not necessarily success) time for each source. pick the one that's been the longest and try it
-				// not blocker
+				    don't know how many modules they'll have activated, though, can't assume that they'll have all 3 of them active. might only enter settings for 1 of them. so have to take that into account if lower the refresh limit
+					 */
+					// pick the module that has gone the longest w/out refreshing
+					// maybe instead of the transient, have an option store the last update attempt (not necessarily success) time for each source. pick the one that's been the longest and try it
+					// or maybe just always do all of them. it's an background request most of the time, so doesn't even matter?
 
-				Tagregator::get_instance()->media_sources[ 'TGGRSourceTwitter' ]->import_new_items( $hashtag );
-				// call modules to import latest, but maybe not all at once
-				// todo make dynamic when adding instagram/flickr
+					Tagregator::get_instance()->media_sources[ 'TGGRSourceTwitter' ]->import_new_items( $hashtag );
+				} elseif ( 'all' == $media_sources ) {
+					foreach ( Tagregator::get_instance()->media_sources as $source ) {
+						$source->import_new_items( $hashtag );
+					}
+				}
 			}
 		}
 
@@ -245,6 +258,44 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 			header( 'Content-Type: '. $content_type .'; charset=utf8' );
 			header( 'Content-Type: '. $content_type );
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 200 OK' );
+		}
+		
+		/**
+		 * Fetches media items for a given hashtag when a post is saved, so that they'll be available immediately when the shortcode is displayed for the first time
+		 * Note that this works, even though it often appears to do nothing. The problem is that Twitter's search API often returns no results,
+		 * even when matching tweets exist. See https://dev.twitter.com/docs/faq#8650 more for details.
+		 * 
+		 * @Controller
+		 * 
+		 * @param int $post_id
+		 * @param WP_Post $post
+		 */
+		public function prefetch_media_items( $post_id, $post ) {
+			$ignored_actions = array( 'trash', 'untrash', 'restore' );
+			
+			if ( 1 !== did_action( 'save_post' ) ) {
+				return;
+			}
+
+			if ( isset( $_GET['action'] ) && in_array( $_GET['action'], $ignored_actions ) ) {
+				return;
+			}
+			
+			if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! $post || $post->post_status == 'auto-draft' ) {
+				return;
+			}
+			
+			preg_match_all( '/' . get_shortcode_regex() . '/s', $post->post_content, $shortcodes, PREG_SET_ORDER );
+			
+			foreach ( $shortcodes as $shortcode ) {
+				if ( self::SHORTCODE_NAME == $shortcode[2] ) {
+					$attributes = shortcode_parse_atts( $shortcode[3] );
+					
+					if ( isset( $attributes['hashtag'] ) ) {
+						$this->import_new_items( $attributes['hashtag'], 'ignore', 'all' );
+					}
+				}
+			}
 		}
 	} // end TGGRShortcodeTagregator
 }
