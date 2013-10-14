@@ -1,9 +1,7 @@
 == High Priority ==
-* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. 
-	can detect presents on the #tggr-no-posts-found element to check, 
-	or if container is empty, 
-	or just do it always when page loads. 
-	or try to do it in php before page loads.
+* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time.
+ 	do on post_save. use has_shortcode() to detect. pull it out. call import_new_items() w/ params that specify to ignore the rate limit and call all the methods
+ 		maybe do it async since it'll be slow?
 * class for instagram
 * on first setup (and probably later) sometimes not pulling in new posts the first few times. have to make muliple ajax requests. problems w/ the race condition blockers?
 * i18n

@@ -1,4 +1,4 @@
-<?php global $post; ?>
+<?php $post = get_post(); ?>
 
 <div id="<?php echo esc_attr( Tagregator::CSS_PREFIX . get_the_ID() ); ?>" class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>media-item <?php echo get_post_type(); ?>">
 	<a href="http://twitter.com/<?php echo esc_attr( $author_username ); ?>" class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>author-profile">

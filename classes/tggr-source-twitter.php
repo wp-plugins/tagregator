@@ -322,7 +322,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 		 * @return string
 		 */
 		public static function link_hashtags_and_usernames( $content ) {
-			global $post;
+			$post = get_post();
 
 			if ( isset( $post->post_type ) && self::POST_TYPE_SLUG == $post->post_type ) {
 				$content = preg_replace( "/@(\w+)/", "<a href=\"https://twitter.com/\\1\" class=\"". self::POST_TYPE_SLUG ."-username\">@\\1</a>", $content );

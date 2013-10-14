@@ -206,15 +206,15 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		 * @param array $excluded_item_ids
 		 */
 		protected function render_media_items( $items, $excluded_item_ids = array() ) {
-			global $post;
-
-			foreach ( $items as $post ) {
-				if ( ! in_array( $post->ID, $excluded_item_ids ) ) {
-					setup_postdata( $post );
+			foreach ( $items as $item ) {
+				if ( ! in_array( $item->ID, $excluded_item_ids ) ) {
+					$GLOBALS['post'] = $item;
+					setup_postdata( $GLOBALS['post'] );
+					
 					$post_type = get_post_type();
 					$class_name = $this->post_types_to_class_names[ $post_type ];
 
-					extract( $class_name::get_instance()->get_item_view_data( $post->ID ) );
+					extract( $class_name::get_instance()->get_item_view_data( $item->ID ) );
 					require( self::get_view_folder_from_post_type( $post_type ) . '/shortcode-tagregator-media-item.php' );
 				}
 			}

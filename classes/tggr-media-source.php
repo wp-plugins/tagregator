@@ -353,7 +353,7 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 		 * @return string
 		 */
 		public static function convert_urls_to_links( $content ) {
-			global $post;
+			$post = get_post();
 			$class = get_called_class();
 
 			if ( isset( $post->post_type ) && $class::POST_TYPE_SLUG == $post->post_type ) {
