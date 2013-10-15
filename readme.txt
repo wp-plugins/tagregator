@@ -4,7 +4,7 @@ Donate link:       http://wordpressfoundation.org
 Tags:              hashtag, social media, aggregation, stream
 Requires at least: 3.5
 Tested up to:      3.6
-Stable tag:        0.2
+Stable tag:        0.3
 License:           GPLv2 or Later
 
 Aggregates hashtagged content from multiple social media sites into a single stream.
