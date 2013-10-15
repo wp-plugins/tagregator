@@ -154,31 +154,15 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		 * 
 		 * @param string $hashtag
 		 * @param string $rate_limit 'respect' to enforce the rate limit, or 'ignore' to ignore it
-		 * @param string $media_sources 'staggered' to only call a single source, or 'all' to call all sources
 		 */
-		protected function import_new_items( $hashtag, $rate_limit = 'respect', $media_sources = 'staggered' ) {
+		protected function import_new_items( $hashtag, $rate_limit = 'respect' ) {
 			$last_fetch = get_transient( Tagregator::PREFIX . 'last_media_fetch', 0 );
 
 			if ( 'ignore' == $rate_limit || self::refresh_interval_elapsed( $last_fetch, $this->refresh_interval ) ) {
 				set_transient( Tagregator::PREFIX . 'last_media_fetch', microtime( true ) );	// do this right away to minimize the chance of race conditions
-
-				if ( 'staggered' == $media_sources ) {
-					// todo make dynamic when adding instagram/flickr
-					/*
-					 * maybe don't fetch from all 3+ at once. maybe each ajax call, only fetch from 1 of them, but do the calls every 15 seconds instead of 30 or something
-					if try to do them all at once, and 1 of them times out, then might break the whole thing
-					also enforce limit on server side b/c will have multiple browsers hitting page at same time, don't want to have 20 requests to twitter b/c 20 people viewing page
-				    don't know how many modules they'll have activated, though, can't assume that they'll have all 3 of them active. might only enter settings for 1 of them. so have to take that into account if lower the refresh limit
-					 */
-					// pick the module that has gone the longest w/out refreshing
-					// maybe instead of the transient, have an option store the last update attempt (not necessarily success) time for each source. pick the one that's been the longest and try it
-					// or maybe just always do all of them. it's an background request most of the time, so doesn't even matter?
-
-					Tagregator::get_instance()->media_sources[ 'TGGRSourceTwitter' ]->import_new_items( $hashtag );
-				} elseif ( 'all' == $media_sources ) {
-					foreach ( Tagregator::get_instance()->media_sources as $source ) {
-						$source->import_new_items( $hashtag );
-					}
+				
+				foreach ( Tagregator::get_instance()->media_sources as $source ) {
+					$source->import_new_items( $hashtag );
 				}
 			}
 		}
@@ -292,7 +276,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 					$attributes = shortcode_parse_atts( $shortcode[3] );
 					
 					if ( isset( $attributes['hashtag'] ) ) {
-						$this->import_new_items( $attributes['hashtag'], 'ignore', 'all' );
+						$this->import_new_items( $attributes['hashtag'], 'ignore' );
 					}
 				}
 			}

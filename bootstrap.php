@@ -52,7 +52,7 @@ function tggr_include_files() {
 	require_once( dirname( __FILE__ ) . '/classes/tggr-shortcode-tagregator.php' );
 	require_once( dirname( __FILE__ ) . '/classes/tggr-media-source.php' );
 	require_once( dirname( __FILE__ ) . '/classes/tggr-source-twitter.php' );
-	//require_once( dirname( __FILE__ ) . '/classes/tggr-source-instagram.php' );
+	require_once( dirname( __FILE__ ) . '/classes/tggr-source-instagram.php' );
 	//require_once( dirname( __FILE__ ) . '/classes/tggr-source-flickr.php' );
 }
 
