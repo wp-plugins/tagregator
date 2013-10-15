@@ -376,7 +376,6 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 				'tweet_id'         => $postmeta['source_id'][0],
 				'author_name'      => $postmeta['author_name'][0],
 				'author_username'  => $postmeta['author_username'][0],
-				'author_url'       => $postmeta['author_url'][0],
 				'author_image_url' => $postmeta['author_image_url'][0],
 				'media'            => isset( $postmeta['media'][0] ) ? maybe_unserialize( $postmeta['media'][0] ) : array(),
 			);
