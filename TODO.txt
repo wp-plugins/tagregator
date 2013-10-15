@@ -1,9 +1,5 @@
 == High Priority ==
-* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time.
- 	do on post_save. use has_shortcode() to detect. pull it out. call import_new_items() w/ params that specify to ignore the rate limit and call all the methods
- 		maybe do it async since it'll be slow?
-* class for instagram
-* on first setup (and probably later) sometimes not pulling in new posts the first few times. have to make muliple ajax requests. problems w/ the race condition blockers?
+* on first setup (and probably later) sometimes not pulling in new posts the first few times. have to make muliple ajax requests. problems w/ the race condition blockers? or just twitter api being lame?
 * i18n
 * https://dev.twitter.com/terms/display-requirements
 	https://dev.twitter.com/docs/image-resources
@@ -12,7 +8,7 @@
 	https://dev.twitter.com/docs/intents
 * "TypeError: a is undefined" JS error on twentythirteen
 	* switch to unminified jquery to debug
-
+* some functions missing @mvc tags
 
 == Contributions / Feedback ==
 * replace PREFIX w/ "tggr" in places users will expect, like filter names. makes it easier for someone to grep the code for something they're looking for. maybe remove the constant completely.
@@ -28,11 +24,12 @@
  
 
 == Medium Priority ==
-* when viewing shortcode page and no posts are there, trigger the ajax call right away in case is the first time. can detect presents on the #tggr-no-posts-found element to check. maybe do a save_post callback and do it then? pull from all sources instead of just 1
 * bug: everything after emoticons gets stripped off. example: https://twitter.com/ElysciaSheldon/status/388785059865829376
 * cron to save posts when no one viewing page. but how will it know which tags to get? hae to scan all posts/pages for shortcodes? maybe when the shortcode loads, it adds the current $post->ID to a _protected setting. then periodically empty the array so it doesn't keep pulling old ones after they're removed from the shortcode
 * class for flickr
 * class for vine
+* add support for videos attached to instagram/flickr in addition to images
+	* just use built in [video] shortcode. can use nested shortcodes? if not, just do it manually, but use mediaelements.js
 * support pulling from usernames
 * support multiple hashtags,usernames on one page
 * infinite scroll? so you can see what happened earlier
@@ -51,7 +48,7 @@
 * prefix postmeta with _ so users won't edit. will have to migrate existing during upgrade?
 * add ability to upload directly from wordpress, rather than using social media
 * maybe call something like register_parent_hooks() inside each media source register_hook_callbacks() function, for things that they'll all do, like convert_urls_to_links()
-
+* convert twitter module to streaming api? see note in prefetch_media_items()
 
 
 == Low Priority ==

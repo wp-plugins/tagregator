@@ -16,7 +16,7 @@ Tagregator lets you add a shortcode to a post or page on your site, and pull in 
 
 = Included Social Media Sources: =
 * Twitter
-* Instagram -- planned for upcoming release
+* Instagram
 * Flickr -- planned for future release
 
 
@@ -72,10 +72,13 @@ If you find a security issue, please disclose it to us privately by sending an e
 
 == Changelog ==
 
-= v0.3 () =
+= v0.3 (10/14/2013) =
 * [FIX] Fixed "tggrData is not defined" bug.
-* [NEW] New single-column design (props @shaunandrews)
+* [NEW] New single-column design (props @shaunandrews).
+* [NEW] Instagram support added.
+* [NEW] Pre-fetch media items when the shortcode is setup so they'll be available immediately.
 * [NEW] Hashtags and usernames inside Tweets are automatically converted to links.
+* [UPDATE] Replaced `global $post` statements with calls to `get_post()`.
 
 = v0.2 (10/9/2013) =
 * [FIX] No longer assuming that term slug matches sanitized version of term name. Fixes bug where Tagregator term would be created with "-2" and would never get posts.
@@ -92,7 +95,7 @@ If you find a security issue, please disclose it to us privately by sending an e
 == Upgrade Notice ==
 
 = 0.3 = 
-Version 0.3 has a new single-column design.
+Version 0.3 has a new single-column design and support for Instagram.
 
 = 0.2 =
 Version 0.2 displayed images attached to tweets and ignores retweets.
