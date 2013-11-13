@@ -72,10 +72,6 @@ if ( ! class_exists( 'TGGRSourceFlickr' ) ) {
 			self::register_post_type( self::POST_TYPE_SLUG, $this->get_post_type_params( self::POST_TYPE_SLUG, self::POST_TYPE_NAME_SINGULAR, self::POST_TYPE_NAME_PLURAL ) );
 			self::create_post_author();   // It should already exist from the first time this class was instantiated, but we need to make sure it still exists now
 			self::get_post_author_user_id();
-
-
-
-			$this->update_newest_media_date( '#hockey' );//todo
 		}
 
 		/**
@@ -223,27 +219,12 @@ if ( ! class_exists( 'TGGRSourceFlickr' ) ) {
 		 * @param string $hashtag
 		 */
 		protected static function update_newest_media_date( $hashtag ) {
-			$term = get_term_by( 'name', $hashtag, self::TAXONOMY_HASHTAG_SLUG );
+			$latest_post = self::get_latest_hashtagged_post( self::POST_TYPE_SLUG, $hashtag );
 			
-			if ( isset ( $term->term_id ) ) {
-				$latest_post = get_posts( array(
-					'posts_per_page'   => 1,
-					'order_by'         => 'date',
-					'post_type'        => self::POST_TYPE_SLUG,
-					'tax_query'        => array(
-						array(
-							'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
-							'field'    => 'id',
-							'terms'    => $term->term_id,
-						),
-					)
-				) );
-	
-				if ( isset( $latest_post[0]->ID ) ) {
-					$settings = TGGRSettings::get_instance()->settings;
-					$settings[ __CLASS__ ]['_newest_media_date'] = strtotime( $latest_post[0]->post_date_gmt . ' GMT' );	// todo doesn't this need to be stored for each hashtag? only matters when multiple tags setup on same site, though
-					TGGRSettings::get_instance()->settings = $settings;
-				}
+			if ( isset( $latest_post->ID ) ) {
+				$settings = TGGRSettings::get_instance()->settings;
+				$settings[ __CLASS__ ]['_newest_media_date'] = strtotime( $latest_post->post_date_gmt . ' GMT' );
+				TGGRSettings::get_instance()->settings = $settings;
 			}
 		}
 

@@ -335,6 +335,39 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 
 			return $post_timestamp_local;
 		}
+		
+		/**
+		 * Retrieves the latest post mapped to a given hashtag
+		 * @mvc Model
+		 * 
+		 * @param $hashtag
+		 * @return object|false 
+		 */
+		protected static function get_latest_hashtagged_post( $post_type, $hashtag ) {
+			$latest_post = false;
+			$term        = get_term_by( 'name', $hashtag, self::TAXONOMY_HASHTAG_SLUG );
+
+			if ( isset ( $term->term_id ) ) {
+				$latest_post = get_posts( array(
+					'posts_per_page'   => 1,
+					'order_by'         => 'date',
+					'post_type'        => $post_type,
+					'tax_query'        => array(
+						array(
+							'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
+							'field'    => 'id',
+							'terms'    => $term->term_id,
+						),
+					)
+				) );
+				
+				if ( isset( $latest_post[0]->ID ) ) {
+					$latest_post = $latest_post[0];
+				}
+			}
+			
+			return $latest_post;
+		}
 
 		/**
 		 * Gathers the data that the media-item view will need
