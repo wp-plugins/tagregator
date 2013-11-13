@@ -108,7 +108,7 @@ if ( ! class_exists( 'Tagregator' ) ) {
 		 * @mvc Controller
 		 */
 		public function register_hook_callbacks() {
-			add_action( 'wpmu_new_blog',         __CLASS__ . '::activate_new_site' );
+			add_action( 'wpmu_new_blog',         array( $this, 'activate_new_site' ) );
 			add_action( 'init',                  array( $this, 'init' ) );
 			add_action( 'init',                  array( $this, 'upgrade' ), 11 );
 			add_action( 'wp_enqueue_scripts',    __CLASS__ . '::load_resources' );
