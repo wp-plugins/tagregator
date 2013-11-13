@@ -339,26 +339,30 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 		 * @param string $hashtag
 		 */
 		protected static function update_newest_tweet_id( $hashtag ) {
-			$latest_post = get_posts( array(
-				'posts_per_page'   => 1,
-				'order_by'         => 'date',
-				'post_type'        => self::POST_TYPE_SLUG,
-				'tax_query'        => array(
-					array(
-						'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
-						'field'    => 'slug',
-						'terms'    => str_replace( '#', '', $hashtag )
-					),
-				)
-			) );
-
-			if ( isset( $latest_post[0]->ID ) ) {
-				$source_id = get_post_meta( $latest_post[0]->ID, 'source_id', true );
-
-				if ( $source_id ) {
-					$settings = TGGRSettings::get_instance()->settings;
-					$settings[ __CLASS__ ]['_newest_tweet_id'] = $source_id;	// todo doesn't this need to be stored for each hashtag? only matters when multiple tags setup on same site, though
-					TGGRSettings::get_instance()->settings = $settings;
+			$term = get_term_by( 'name', $hashtag, self::TAXONOMY_HASHTAG_SLUG );
+			
+			if ( isset( $term->term_id ) ) {
+				$latest_post = get_posts( array(
+					'posts_per_page'   => 1,
+					'order_by'         => 'date',
+					'post_type'        => self::POST_TYPE_SLUG,
+					'tax_query'        => array(
+						array(
+							'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
+							'field'    => 'id',
+							'terms'    => $term->term_id
+						),
+					)
+				) );
+	
+				if ( isset( $latest_post[0]->ID ) ) {
+					$source_id = get_post_meta( $latest_post[0]->ID, 'source_id', true );
+	
+					if ( $source_id ) {
+						$settings = TGGRSettings::get_instance()->settings;
+						$settings[ __CLASS__ ]['_newest_tweet_id'] = $source_id;	// todo doesn't this need to be stored for each hashtag? only matters when multiple tags setup on same site, though
+						TGGRSettings::get_instance()->settings = $settings;
+					}
 				}
 			}
 		}
