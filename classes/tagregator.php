@@ -34,7 +34,7 @@ if ( ! class_exists( 'Tagregator' ) ) {
 			$this->media_sources = apply_filters( self::PREFIX . 'media_sources', array(
 				'TGGRSourceTwitter'       => TGGRSourceTwitter::get_instance(),
 				'TGGRSourceInstagram'     => TGGRSourceInstagram::get_instance(),
-				//'TGGRSourceFlickr'        => TGGRSourceFlickr::get_instance(),
+				'TGGRSourceFlickr'        => TGGRSourceFlickr::get_instance(),
 			) );
 		}
 
