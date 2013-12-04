@@ -3,8 +3,8 @@ Contributors:      wordpressdotorg, iandunn, shaunandrews
 Donate link:       http://wordpressfoundation.org
 Tags:              hashtag, social media, aggregation, stream
 Requires at least: 3.5
-Tested up to:      3.6
-Stable tag:        0.3
+Tested up to:      3.8-RC1
+Stable tag:        0.4
 License:           GPLv2 or Later
 
 Aggregates hashtagged content from multiple social media sites into a single stream.
@@ -17,7 +17,7 @@ Tagregator lets you add a shortcode to a post or page on your site, and pull in 
 = Included Social Media Sources: =
 * Twitter
 * Instagram
-* Flickr -- planned for future release
+* Flickr
 
 
 == Installation ==
@@ -72,6 +72,11 @@ If you find a security issue, please disclose it to us privately by sending an e
 
 == Changelog ==
 
+= v0.4 (12/04/2013) =
+* [FIX] Fixed a fatal PHP error on new site activation in Multisite networks.
+* [FIX] Fixed a PHP notice when assigning hashtags to posts
+* [NEW] Added support for Flickr.
+
 = v0.3 (10/14/2013) =
 * [FIX] Fixed "tggrData is not defined" bug.
 * [NEW] New single-column design (props @shaunandrews).
@@ -93,6 +98,9 @@ If you find a security issue, please disclose it to us privately by sending an e
 
 
 == Upgrade Notice ==
+
+= 0.4 = 
+Version 0.4 adds support for Flickr and fixes a few bugs.
 
 = 0.3 = 
 Version 0.3 has a new single-column design and support for Instagram.
