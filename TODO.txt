@@ -4,7 +4,8 @@
 	* switch to unminified jquery to debug
 	* check 2014 too
 * Can tag v1.0 when these are done
-	
+* subscribers/etc can see menu item, but when click on it get cap error
+
 	
 == Contributions / Feedback ==
 * do "x new posts" at top instead of automatically inserting them, ala twitter
@@ -27,7 +28,7 @@
 * use new wp_get_sites() function instead of manual query
 * network deactivate needs to do all sites?
 * register taxonomies with post type -- see note in http://codex.wordpress.org/register_post_type
-
+* replace update_option_{option} callback in twitter class with pre_update_option_{option} filter
 
 == Medium Priority ==
 * update_newest_media_[id|date] is all source modules -	this needs to be stored for each hashtag. otherwise bug when multiple tags setup on same site b/c they're sharing the same id, so will miss some posts

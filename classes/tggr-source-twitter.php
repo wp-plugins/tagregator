@@ -233,14 +233,15 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 			if ( $bearer_token && $hashtag && is_numeric( $since_id ) ) {
 				$url = self::API_URL . '/1.1/search/tweets.json?q=' . urlencode( $hashtag ) . '&since_id=' . urlencode( $since_id );
 
-				$response = json_decode( wp_remote_retrieve_body( wp_remote_get(
+				$response = wp_remote_get(
 					$url,
 					array(
 						'headers' => array(
 							'Authorization' => 'Bearer ' . $bearer_token,
 						),
 					)
-				) ) );
+				);
+				$response = json_decode( wp_remote_retrieve_body( $response ) );
 
 				if ( isset( $response->statuses ) && ! empty( $response->statuses ) ) {
 					$tweets = $response->statuses;

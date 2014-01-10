@@ -149,7 +149,8 @@ if ( ! class_exists( 'TGGRSourceFlickr' ) ) {
 					urlencode( $api_key )
 				);
 
-				$response = json_decode( wp_remote_retrieve_body( wp_remote_get( $url ) ) );
+				$response = wp_remote_get( $url );
+				$response = json_decode( wp_remote_retrieve_body( $response ) );
 				
 				if ( isset( $response->stat ) && 'ok' == $response->stat ) {
 					$media = $response->photos->photo;

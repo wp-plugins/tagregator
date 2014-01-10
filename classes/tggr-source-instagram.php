@@ -147,7 +147,8 @@ if ( ! class_exists( 'TGGRSourceInstagram' ) ) {
 					urlencode( $max_id )
 				);
 
-				$response = json_decode( wp_remote_retrieve_body( wp_remote_get( $url ) ) );	
+				$response = wp_remote_get( $url );
+				$response = json_decode( wp_remote_retrieve_body( $response ) );	
 
 				if ( isset( $response->data ) && ! empty( $response->data ) ) {
 					$media = $response->data;
