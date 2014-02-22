@@ -11,7 +11,6 @@
 * do "x new posts" at top instead of automatically inserting them, ala twitter
 * replace PREFIX w/ "tggr" in places users will expect, like filter names. makes it easier for someone to grep the code for something they're looking for. maybe remove the constant completely.
 * in classes, just `return` if class_exists(). then don't have to indent everything another level
-* george instagram, etc
 * switch to 1 column default layout
 * incorportate the user's bg image, like http://vaultpress.com/what-theyre-saying/
 * use http://fortawesome.github.io/Font-Awesome/ for icons instead of the images
@@ -29,6 +28,7 @@
 * network deactivate needs to do all sites?
 * register taxonomies with post type -- see note in http://codex.wordpress.org/register_post_type
 * replace update_option_{option} callback in twitter class with pre_update_option_{option} filter
+
 
 == Medium Priority ==
 * update_newest_media_[id|date] is all source modules -	this needs to be stored for each hashtag. otherwise bug when multiple tags setup on same site b/c they're sharing the same id, so will miss some posts

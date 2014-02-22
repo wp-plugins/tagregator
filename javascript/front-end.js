@@ -23,6 +23,7 @@ function tggrWrapper( $ ) {
 			tggr.mediaItem          = '.' + tggr.cssPrefix + 'media-item';
 			tggr.existingItemIDs    = tggr.getExistingItemIDs();
 			
+			tggr.retrieveNewItems();
 			setInterval( tggr.retrieveNewItems, tggrData.refreshInterval * 1000 );	// convert to milliseconds
 		},
 
