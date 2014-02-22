@@ -6,6 +6,7 @@ Description: Aggregates hashtagged content from multiple social media sites into
 Version:     0.4
 Author:      WordCamp.org
 Author URI:  http://wordcamp.org
+License:     GPLv2 or later
 */
 
 if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ )
