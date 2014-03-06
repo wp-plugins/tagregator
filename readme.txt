@@ -78,6 +78,9 @@ Once you're done, please consider sharing it with others by [submitting it to th
 
 == Changelog ==
 
+= v0.5 () =
+* Retrieve new content immediately when the page loads.
+
 = v0.4 (12/04/2013) =
 * [FIX] Fixed a fatal PHP error on new site activation in Multisite networks.
 * [FIX] Fixed a PHP notice when assigning hashtags to posts
@@ -104,6 +107,9 @@ Once you're done, please consider sharing it with others by [submitting it to th
 
 
 == Upgrade Notice ==
+
+= 0.5 =
+
 
 = 0.4 = 
 Version 0.4 adds support for Flickr and fixes a few bugs.
