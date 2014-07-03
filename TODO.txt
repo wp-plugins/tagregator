@@ -57,6 +57,7 @@
 * maybe call something like register_parent_hooks() inside each media source register_hook_callbacks() function, for things that they'll all do, like convert_urls_to_links()
 * convert twitter module to streaming api? see note in prefetch_media_items()
 * profile for memory usage w/ 9000+ posts
+* rewrite front end bits with backbone.js
 
 
 == Low Priority ==

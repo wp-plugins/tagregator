@@ -21,6 +21,8 @@
 		<?php endif; ?>
 	</div>
 
+	<img class="tggr-source-logo" src="<?php echo esc_attr( $logo_url ); ?>" alt="Twitter" />
+
 	<a href="https://twitter.com/<?php echo esc_attr( $author_username ); ?>/status/<?php echo esc_attr( $tweet_id ); ?>" class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>timestamp">
 		<?php echo human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago'; ?>
 	</a>

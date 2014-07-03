@@ -90,11 +90,21 @@
 					color: rgba( 0, 0, 0, 0.8 );
 				}
 				
-		.tggr-timestamp {
+		.entry-content img.tggr-source-logo {
 			position: absolute;
 			top: 15px;
-			right: 15px;
-			font-size: 12px;
+			right: 11px;
+			font-size: 11px;
+			color: rgba( 0, 0, 0, 0.3 );
+			text-decoration: none;
+			height: 20px;
+		}
+
+		.tggr-timestamp {
+			position: absolute;
+			bottom: 5px;
+			left: 10px;
+			font-size: 11px;
 			color: rgba( 0, 0, 0, 0.3 );
 			text-decoration: none;
 		}

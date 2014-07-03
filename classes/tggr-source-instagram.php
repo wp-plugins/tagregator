@@ -273,6 +273,7 @@ if ( ! class_exists( 'TGGRSourceInstagram' ) ) {
 				'author_username'  => $postmeta['author_username'][0],
 				'author_image_url' => $postmeta['author_image_url'][0],
 				'media'            => isset( $postmeta['media'][0] ) ? maybe_unserialize( $postmeta['media'][0] ) : array(),
+				'logo_url'         => plugins_url( 'images/source-logos/instagram.png', __DIR__ ),
 			);
 
 			return $necessary_data;

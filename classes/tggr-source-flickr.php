@@ -244,6 +244,7 @@ if ( ! class_exists( 'TGGRSourceFlickr' ) ) {
 				'author_profile_url' => sprintf( 'http://www.flickr.com/people/%s', $postmeta['author_id'][0] ),
 				'author_image_url'   => $postmeta['icon_server'][0] > 0 ? sprintf( 'http://farm%d.staticflickr.com/%d/buddyicons/%s.jpg', $postmeta['icon_farm'][0], $postmeta['icon_server'][0], $postmeta['author_id'][0] ) : 'http://www.flickr.com/images/buddyicon.gif',
 				'media'              => isset( $postmeta['media'][0] ) ? maybe_unserialize( $postmeta['media'][0] ) : array(),
+				'logo_url'           => plugins_url( 'images/source-logos/flickr.png', __DIR__ ),
 			);
 
 			return $necessary_data;

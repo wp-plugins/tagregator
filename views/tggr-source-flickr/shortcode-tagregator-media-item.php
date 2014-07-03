@@ -18,6 +18,8 @@
 		<?php endif; ?>
 	</div>
 
+	<img class="tggr-source-logo" src="<?php echo esc_attr( $logo_url ); ?>" alt="Flickr" />
+
 	<a href="<?php echo esc_url( $media_permalink ); ?>" class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>timestamp">
 		<?php echo human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago'; ?>
 	</a>
