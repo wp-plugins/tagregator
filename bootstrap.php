@@ -3,7 +3,7 @@
 Plugin Name: Tagregator
 Plugin URI:  http://wordpress.org/plugins/tagregator
 Description: Aggregates hashtagged content from multiple social media sites into a single stream.
-Version:     0.4
+Version:     0.5
 Author:      WordCamp.org
 Author URI:  http://wordcamp.org
 License:     GPLv2 or later

@@ -3,8 +3,8 @@ Contributors:      wordpressdotorg, iandunn, shaunandrews
 Donate link:       http://wordpressfoundation.org
 Tags:              hashtag, social media, aggregation, stream
 Requires at least: 3.5
-Tested up to:      3.9
-Stable tag:        0.4
+Tested up to:      4.0-beta2
+Stable tag:        0.5
 License:           GPLv2 or Later
 
 Aggregates hashtagged content from multiple social media sites into a single stream.
@@ -79,16 +79,16 @@ Once you're done, please consider sharing it with others by [submitting it to th
 
 == Changelog ==
 
-= v0.5 () =
+= v0.5 (2014-07-23) =
 * [NEW] Add Google+ media source (props [fahmiadib](https://profiles.wordpress.org/fahmiadib)).
 * [UPDATE] Retrieve new content immediately when the page loads.
 
-= v0.4 (12/04/2013) =
+= v0.4 (2013-12-04) =
 * [FIX] Fixed a fatal PHP error on new site activation in Multisite networks.
 * [FIX] Fixed a PHP notice when assigning hashtags to posts
 * [NEW] Added support for Flickr.
 
-= v0.3 (10/14/2013) =
+= v0.3 (2013-10-14) =
 * [FIX] Fixed "tggrData is not defined" bug.
 * [NEW] New single-column design (props [shaunandrews](https://profiles.wordpress.org/shaunandrews)).
 * [NEW] Instagram support added.
@@ -96,7 +96,7 @@ Once you're done, please consider sharing it with others by [submitting it to th
 * [NEW] Hashtags and usernames inside Tweets are automatically converted to links.
 * [UPDATE] Replaced `global $post` statements with calls to `get_post()`.
 
-= v0.2 (10/9/2013) =
+= v0.2 (2013-10-09) =
 * [FIX] No longer assuming that term slug matches sanitized version of term name. Fixes bug where Tagregator term would be created with "-2" and would never get posts.
 * [NEW] Images attached to Tweets are now displayed.
 * [NEW] Retweets are no longer imported.
@@ -104,7 +104,7 @@ Once you're done, please consider sharing it with others by [submitting it to th
 * [UPDATE] Tweet content sanitized with wp_kses() instead of sanitize_text_field().
 * [UPDATE] Moved all includes to bootstrapper.
 
-= v0.1 (9/17/2013) =
+= v0.1 (2013-09-17) =
 * [NEW] Initial release
 
 

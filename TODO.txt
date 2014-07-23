@@ -28,6 +28,7 @@
 * network deactivate needs to do all sites?
 * register taxonomies with post type -- see note in http://codex.wordpress.org/register_post_type
 * replace update_option_{option} callback in twitter class with pre_update_option_{option} filter
+* remove from search results because clutters them and not expected to be there
 
 
 == Medium Priority ==
