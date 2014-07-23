@@ -18,6 +18,7 @@ Tagregator lets you add a shortcode to a post or page on your site, and pull in 
 * Twitter
 * Instagram
 * Flickr
+* Google+
 
 
 == Installation ==
@@ -79,7 +80,8 @@ Once you're done, please consider sharing it with others by [submitting it to th
 == Changelog ==
 
 = v0.5 () =
-* Retrieve new content immediately when the page loads.
+* [NEW] Add Google+ media source (props [fahmiadib](https://profiles.wordpress.org/fahmiadib)).
+* [UPDATE] Retrieve new content immediately when the page loads.
 
 = v0.4 (12/04/2013) =
 * [FIX] Fixed a fatal PHP error on new site activation in Multisite networks.
@@ -88,7 +90,7 @@ Once you're done, please consider sharing it with others by [submitting it to th
 
 = v0.3 (10/14/2013) =
 * [FIX] Fixed "tggrData is not defined" bug.
-* [NEW] New single-column design (props @shaunandrews).
+* [NEW] New single-column design (props [shaunandrews](https://profiles.wordpress.org/shaunandrews)).
 * [NEW] Instagram support added.
 * [NEW] Pre-fetch media items when the shortcode is setup so they'll be available immediately.
 * [NEW] Hashtags and usernames inside Tweets are automatically converted to links.
@@ -109,7 +111,7 @@ Once you're done, please consider sharing it with others by [submitting it to th
 == Upgrade Notice ==
 
 = 0.5 =
-
+* Version 0.5 adds support for Google+.
 
 = 0.4 = 
 Version 0.4 adds support for Flickr and fixes a few bugs.

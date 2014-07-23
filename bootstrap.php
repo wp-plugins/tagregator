@@ -55,6 +55,7 @@ function tggr_include_files() {
 	require_once( dirname( __FILE__ ) . '/classes/tggr-source-twitter.php' );
 	require_once( dirname( __FILE__ ) . '/classes/tggr-source-instagram.php' );
 	require_once( dirname( __FILE__ ) . '/classes/tggr-source-flickr.php' );
+	require_once( dirname( __FILE__ ) . '/classes/tggr-source-google.php' );
 }
 
 /*

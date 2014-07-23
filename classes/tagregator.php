@@ -35,6 +35,7 @@ if ( ! class_exists( 'Tagregator' ) ) {
 				'TGGRSourceTwitter'       => TGGRSourceTwitter::get_instance(),
 				'TGGRSourceInstagram'     => TGGRSourceInstagram::get_instance(),
 				'TGGRSourceFlickr'        => TGGRSourceFlickr::get_instance(),
+				'TGGRSourceGoogle'        => TGGRSourceGoogle::get_instance(),
 			) );
 		}
 
