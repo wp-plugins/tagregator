@@ -81,6 +81,7 @@ Once you're done, please consider sharing it with others by [submitting it to th
 
 = v0.5 (2014-07-23) =
 * [NEW] Add Google+ media source (props [fahmiadib](https://profiles.wordpress.org/fahmiadib)).
+* [NEW] Add media source icons to items view (props [digne](https://profiles.wordpress.org/digne)).
 * [UPDATE] Retrieve new content immediately when the page loads.
 
 = v0.4 (2013-12-04) =
