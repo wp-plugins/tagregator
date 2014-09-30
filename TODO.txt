@@ -5,6 +5,10 @@
 	* check 2014 too
 * Can tag v1.0 when these are done
 * subscribers/etc can see menu item, but when click on it get cap error
+* tweets w/ emoji breaking when inserted into db.
+	* maybe base64-encode them before saving them, but needs to be backcompat.
+	* maybe do to all services in case they start supporting emoji in future.
+	* https://core.trac.wordpress.org/ticket/27961
 
 	
 == Contributions / Feedback ==
@@ -59,6 +63,8 @@
 * convert twitter module to streaming api? see note in prefetch_media_items()
 * profile for memory usage w/ 9000+ posts
 * rewrite front end bits with backbone.js
+* make log page more readable. better formatting of the data array, line wrapping / scrolling, maybe unserialize nested items, etc. maybe use wp_list_table
+* add logging throughout the rest of the codebase, where appropriate
 
 
 == Low Priority ==

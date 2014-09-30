@@ -187,6 +187,8 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 				$token = false;
 			}
 
+			self::log( __METHOD__, 'Results', compact( 'credentials', 'response', 'token' ) );
+
 			return $token;
 		}
 
@@ -217,7 +219,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 		 * @return mixed string|false
 		 */
 		protected static function get_new_hashtagged_tweets( $bearer_token, $hashtag, $since_id ) {
-			$tweets = false;
+			$response = $tweets = false;
 
 			if ( ! $bearer_token ) {
 				self::obtain_bearer_token();
@@ -243,12 +245,14 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 						),
 					)
 				);
-				$response = json_decode( wp_remote_retrieve_body( $response ) );
+				$body = json_decode( wp_remote_retrieve_body( $response ) );
 
-				if ( isset( $response->statuses ) && ! empty( $response->statuses ) ) {
-					$tweets = $response->statuses;
+				if ( isset( $body->statuses ) && ! empty( $body->statuses ) ) {
+					$tweets = $body->statuses;
 				}
 			}
+
+			self::log( __METHOD__, 'Results', compact( 'bearer_token', 'hashtag', 'since_id', 'response' ) );
 
 			return $tweets;
 		}

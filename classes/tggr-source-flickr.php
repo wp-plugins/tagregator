@@ -138,7 +138,7 @@ if ( ! class_exists( 'TGGRSourceFlickr' ) ) {
 		 * @return mixed string|false
 		 */
 		protected static function get_new_media( $api_key, $hashtag, $min_upload_date ) {
-			$media = false;
+			$response = $media = false;
 
 			if ( $api_key && $hashtag ) {
 				$url = sprintf(
@@ -150,12 +150,14 @@ if ( ! class_exists( 'TGGRSourceFlickr' ) ) {
 				);
 
 				$response = wp_remote_get( $url );
-				$response = json_decode( wp_remote_retrieve_body( $response ) );
+				$body     = json_decode( wp_remote_retrieve_body( $response ) );
 				
-				if ( isset( $response->stat ) && 'ok' == $response->stat ) {
-					$media = $response->photos->photo;
+				if ( isset( $body->stat ) && 'ok' == $body->stat ) {
+					$media = $body->photos->photo;
 				}
 			}
+
+			self::log( __METHOD__, 'Results', compact( 'api_key', 'hashtag', 'min_upload_date', 'response' ) );
 
 			return $media;
 		}
@@ -250,4 +252,4 @@ if ( ! class_exists( 'TGGRSourceFlickr' ) ) {
 			return $necessary_data;
 		}
 	} // end TGGRSourceFlickr
-}	
+}

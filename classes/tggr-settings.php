@@ -160,6 +160,17 @@ if ( ! class_exists( 'TGGRSettings' ) ) {
 				__CLASS__ . '::markup_settings_page'
 			);
 
+			if ( apply_filters( Tagregator::PREFIX . 'show_log', false ) ) {
+				add_submenu_page(
+					self::MENU_SLUG,
+					'Log',
+					'Log',
+					self::REQUIRED_CAPABILITY,
+					Tagregator::PREFIX . 'log',
+					__CLASS__ . '::markup_log_page'
+				);
+			}
+
 			remove_submenu_page( self::MENU_SLUG, self::MENU_SLUG );	// The top level menu just points to the Settings page, so the 'Tagregator' submenu is redundant
 		}
 
@@ -170,6 +181,19 @@ if ( ! class_exists( 'TGGRSettings' ) ) {
 		public static function markup_settings_page() {
 			if ( current_user_can( self::REQUIRED_CAPABILITY ) ) {
 				require_once( dirname( __DIR__ ) . '/views/tggr-settings/page-settings.php' );
+			} else {
+				wp_die( 'Access denied.' );
+			}
+		}
+
+		/**
+		 * Creates the markup for the Log page
+		 * @mvc Controller
+		 */
+		public static function markup_log_page() {
+			if ( current_user_can( self::REQUIRED_CAPABILITY ) ) {
+				$log_entries = get_option( Tagregator::PREFIX . 'log', array() );
+				require_once( dirname( __DIR__ ) . '/views/tggr-settings/page-log.php' );
 			} else {
 				wp_die( 'Access denied.' );
 			}

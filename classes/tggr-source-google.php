@@ -143,7 +143,7 @@ if ( ! class_exists( 'TGGRSourceGoogle' ) ) {
 		 * @return mixed string|false
 		 */
 		protected static function get_new_activities( $api_key, $hashtag, $last_updated_activities ) {
-			$activities = false;
+			$response = $activities = false;
 
 			if ( $api_key && $hashtag ) {
 				$url = sprintf(
@@ -154,12 +154,14 @@ if ( ! class_exists( 'TGGRSourceGoogle' ) ) {
 				);
 
 				$response = wp_remote_get( $url );
-				$response = json_decode( wp_remote_retrieve_body( $response ) );
+				$body     = json_decode( wp_remote_retrieve_body( $response ) );
 
-				if ( isset( $response->updated ) && strtotime( $response->updated ) > $last_updated_activities && ! empty( $response->items ) ) {
-					$activities = $response->items;
+				if ( isset( $body->updated ) && strtotime( $body->updated ) > $last_updated_activities && ! empty( $body->items ) ) {
+					$activities = $body->items;
 				}
 			}
+
+			self::log( __METHOD__, 'Results', compact( 'api_key', 'hashtag', 'last_updated_activities', 'response' ) );
 
 			return $activities;
 		}

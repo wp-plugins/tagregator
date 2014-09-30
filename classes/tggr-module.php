@@ -100,5 +100,34 @@ if ( ! class_exists( 'TGGRModule' ) ) {
 		 * @param string $db_version
 		 */
 		abstract public function upgrade( $db_version = 0 );
+
+		/**
+		 * Log a message to the database to aid in debugging
+		 *
+		 * @param string $method
+		 * @param string $message
+		 * @param array  $data
+		 */
+		public static function log( $method, $message, $data = array() ) {
+			$max_number_log_entries = apply_filters( Tagregator::PREFIX . 'max_number_log_entries', 10 );
+			$log_entries            = get_option( Tagregator::PREFIX . 'log' );
+
+			if ( ! is_array( $log_entries ) ) {
+				$log_entries = array();
+			}
+
+			$log_entries[] = array(
+				'timestamp'  => current_time( 'mysql' ),
+				'method'     => $method,
+				'message'    => $message,
+				'data'       => $data
+			);
+
+			$offset      = max( count( $log_entries ) - $max_number_log_entries, 0 );    // The count() - max_number_log_entries can potentially be negative, so max() ensures it's always >= 0
+			$log_entries = array_slice( $log_entries, $offset, $max_number_log_entries );
+
+			update_option( Tagregator::PREFIX . 'log', $log_entries );
+			do_action( Tagregator::PREFIX . 'log', $method, $message, $data );
+		}
 	} // end TGGRModule
 }

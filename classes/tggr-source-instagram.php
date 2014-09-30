@@ -136,7 +136,7 @@ if ( ! class_exists( 'TGGRSourceInstagram' ) ) {
 		 * @return mixed string|false
 		 */
 		protected static function get_new_media( $client_id, $hashtag, $max_id ) {
-			$media = false;
+			$response = $media = false;
 
 			if ( $client_id && $hashtag ) {
 				$url = sprintf(
@@ -148,12 +148,14 @@ if ( ! class_exists( 'TGGRSourceInstagram' ) ) {
 				);
 
 				$response = wp_remote_get( $url );
-				$response = json_decode( wp_remote_retrieve_body( $response ) );	
+				$body     = json_decode( wp_remote_retrieve_body( $response ) );
 
-				if ( isset( $response->data ) && ! empty( $response->data ) ) {
-					$media = $response->data;
+				if ( isset( $body->data ) && ! empty( $body->data ) ) {
+					$media = $body->data;
 				}
 			}
+
+			self::log( __METHOD__, 'Results', compact( 'client_id', 'hashtag', 'max_id', 'response' ) );
 
 			return $media;
 		}
