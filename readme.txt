@@ -51,8 +51,14 @@ You can also enter keywords or search queries, like this:
 
 == Frequently Asked Questions ==
 
-= I setup the shortcode, but no posts have been imported =
-When setting it up the first time, make sure you wait 30-60 seconds in order to let the plugin pull in the first round of posts.
+= I added my API keys and setup the shortcode, but no posts have been imported =
+There could be something wrong with your API credentials or network that is causing the API requests to fail. Tagregator logs the raw responses to assist in debugging.
+
+To view the logs, add this line to a [functionality plugin](http://wpcandy.com/teaches/how-to-create-a-functionality-plugin/), and then visit the Tagregator > Log page.
+
+`add_filter( 'tggr_show_log', '__return_true' );`
+
+**Warning:** The logs will contain your private API keys, so don't post them on public forums, etc.
 
 = Why do posts show up with the wrong time? =
 This is probably because you haven't configured your timezone in WordPress's General Settings. After updating the timezone, you may need to wait up to 23 hours for new posts to appear ahead of the ones that were saved with the old timezone.
