@@ -2,6 +2,8 @@
 	<div id="icon-options-general" class="icon32"><br /></div>
 	<h2><?php esc_html_e( TGGR_NAME ); ?> Log</h2>
 
+	<p><strong>Warning:</strong> These logs will contain your private API keys, so don't post them on public support forums, etc.</p>
+
 	<table class="widefat">
 		<thead>
 			<tr>
