@@ -14,7 +14,7 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ )
 
 define( 'TGGR_NAME',                 'Tagregator' );
 define( 'TGGR_REQUIRED_PHP_VERSION', '5.3' ); // because of get_called_class()
-define( 'TGGR_REQUIRED_WP_VERSION',  '3.5' ); // because of HOUR_IN_SECONDS
+define( 'TGGR_REQUIRED_WP_VERSION',  '3.6' ); // because of has_shortcode()
 
 /**
  * Checks if the system requirements are met

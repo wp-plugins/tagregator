@@ -50,6 +50,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 			add_action( 'save_post',                                                         array( $this, 'prefetch_media_items' ), 10, 2 );
 			add_action( 'wp_ajax_'.        Tagregator::PREFIX . 'render_latest_media_items', array( $this, 'render_latest_media_items' ) );
 			add_action( 'wp_ajax_nopriv_'. Tagregator::PREFIX . 'render_latest_media_items', array( $this, 'render_latest_media_items' ) );
+			add_filter( 'body_class',                                                        array( $this, 'add_body_classes' ) );
 
 			add_shortcode( self::SHORTCODE_NAME,                                             array( $this, 'shortcode_tagregator' ) );
 		}
@@ -73,6 +74,37 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		 * @param string $db_version
 		 */
 		public function upgrade( $db_version = 0 ) {}
+
+		/**
+		 * Add a class to body if this page has the tagregator shortcode.
+		 *
+		 * @param array $classes
+		 * @return array
+		 */
+		public function add_body_classes( $classes ) {
+			if ( self::current_page_has_shortcode( self::SHORTCODE_NAME ) ) {
+				$classes[] = self::SHORTCODE_NAME;
+			}
+
+			return $classes;
+		}
+
+		/**
+		 * Check if the current page has a given shortcode.
+		 *
+		 * @param string $shortcode
+		 * @return boolean
+		 */
+		protected static function current_page_has_shortcode( $shortcode ) {
+			global $post;
+			$has_shortcode = false;
+
+			if ( is_singular() && is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, $shortcode ) ) {
+				$has_shortcode = true;
+			}
+
+			return $has_shortcode;
+		}
 
 		/**
 		 * Controller for the [tagregator] shortcode
