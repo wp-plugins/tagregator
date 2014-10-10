@@ -252,6 +252,7 @@ if ( ! class_exists( 'TGGRSourceGoogle' ) ) {
 				'author_image_url' => $postmeta['author_image_url'][0],
 				'media'            => isset( $postmeta['media'][0] ) ? maybe_unserialize( $postmeta['media'][0] ) : array(),
 				'logo_url'         => plugins_url( 'images/source-logos/google-plus.png', __DIR__ ),
+				'css_classes'      => self::get_css_classes(),
 			);
 
 			return $necessary_data;

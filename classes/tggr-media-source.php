@@ -379,6 +379,19 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 		abstract public function get_item_view_data( $post_id );
 
 		/**
+		 * Determine the relevant CSS classes for a media item container
+		 *
+		 * @param array $classes Extra classes to add the defaults
+		 * @return array
+		 */
+		public static function get_css_classes( $classes = array() ) {
+			array_unshift( $classes, get_post_type() );
+			array_unshift( $classes, Tagregator::CSS_PREFIX . 'media-item' );
+
+			return apply_filters( 'tagregator_item_class', implode( ' ', $classes ) );
+		}
+
+		/**
 		 * Converts URLs inside a block of text into hyperlinks
 		 * @mvc Model
 		 *
