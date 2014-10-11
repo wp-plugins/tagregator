@@ -388,7 +388,7 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 			array_unshift( $classes, get_post_type() );
 			array_unshift( $classes, Tagregator::CSS_PREFIX . 'media-item' );
 
-			return apply_filters( 'tagregator_item_class', implode( ' ', $classes ) );
+			return apply_filters( Tagregator::PREFIX . 'item_css_classes', implode( ' ', $classes ) );
 		}
 
 		/**
