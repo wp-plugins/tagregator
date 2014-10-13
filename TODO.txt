@@ -65,6 +65,7 @@
 * rewrite front end bits with backbone.js
 * make log page more readable. better formatting of the data array, line wrapping / scrolling, maybe unserialize nested items, etc. maybe use wp_list_table
 * add logging throughout the rest of the codebase, where appropriate
+* sometimes avatar images 404, i think that happens when someone changes their avatar after the post has been cached in the db. maybe have js detect when an avatar fails, and remove it, or replace it w/ a blank one, so don't have the ugly empty border
 
 
 == Low Priority ==

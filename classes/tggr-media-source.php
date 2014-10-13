@@ -380,15 +380,27 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 
 		/**
 		 * Determine the relevant CSS classes for a media item container
+		 * @mvc Model
 		 *
+		 * @param int $item_id
+		 * @param string $author_username
 		 * @param array $classes Extra classes to add the defaults
 		 * @return array
 		 */
-		public static function get_css_classes( $classes = array() ) {
+		public static function get_css_classes( $item_id, $author_username, $classes = array() ) {
 			array_unshift( $classes, get_post_type() );
 			array_unshift( $classes, Tagregator::CSS_PREFIX . 'media-item' );
 
-			return implode( ' ', apply_filters( Tagregator::PREFIX . 'item_css_classes', $classes ) );
+			$highlighted_accounts = explode(
+				',',
+				strtolower( trim( TGGRSettings::get_instance()->settings[ get_called_class() ]['highlighted_accounts'] ) )
+			);
+
+			if ( in_array( strtolower( $author_username ), $highlighted_accounts ) ) {
+				$classes[] = Tagregator::CSS_PREFIX . 'highlighted-account';
+			}
+
+			return implode( ' ', apply_filters( Tagregator::PREFIX . 'item_css_classes', $classes, $item_id, $author_username ) );
 		}
 
 		/**

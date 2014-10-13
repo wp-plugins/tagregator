@@ -26,7 +26,7 @@ if ( ! class_exists( 'TGGRSourceGoogle' ) ) {
 		 */
 		protected function __construct() {
 			$this->view_folder   = dirname( __DIR__ ) . '/views/'. str_replace( '.php', '', basename( __FILE__ ) );
-			$this->setting_names = array( 'API Key' );
+			$this->setting_names = array( 'API Key', 'Highlighted Accounts' );
 
 			foreach ( $this->setting_names as $key ) {
 				$this->default_settings[ strtolower( str_replace( ' ', '_', $key ) ) ] = '';
@@ -252,7 +252,7 @@ if ( ! class_exists( 'TGGRSourceGoogle' ) ) {
 				'author_image_url' => $postmeta['author_image_url'][0],
 				'media'            => isset( $postmeta['media'][0] ) ? maybe_unserialize( $postmeta['media'][0] ) : array(),
 				'logo_url'         => plugins_url( 'images/source-logos/google-plus.png', __DIR__ ),
-				'css_classes'      => self::get_css_classes(),
+				'css_classes'      => self::get_css_classes( $post_id, $postmeta['author_name'][0] ),
 			);
 
 			return $necessary_data;
