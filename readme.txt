@@ -3,7 +3,7 @@ Contributors:      wordpressdotorg, iandunn, shaunandrews
 Donate link:       http://wordpressfoundation.org
 Tags:              hashtag, social media, aggregation, stream
 Requires at least: 3.6
-Tested up to:      4.0-beta2
+Tested up to:      4.0
 Stable tag:        0.5
 License:           GPLv2 or Later
 
@@ -118,7 +118,7 @@ Once you're done, please consider sharing it with others by [submitting it to th
 == Upgrade Notice ==
 
 = 0.5 =
-* Version 0.5 adds support for Google+.
+Version 0.5 adds support for Google+.
 
 = 0.4 = 
 Version 0.4 adds support for Flickr and fixes a few bugs.
