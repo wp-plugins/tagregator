@@ -110,7 +110,8 @@ if ( ! class_exists( 'TGGRSettings' ) ) {
 		protected static function get_settings() {
 			$settings = shortcode_atts(
 				self::$default_settings,
-				get_option( Tagregator::PREFIX . 'settings', array() )
+				get_option( Tagregator::PREFIX . 'settings', array() ),
+				self::SETTING_SLUG
 			);
 
 			return $settings;
@@ -246,7 +247,9 @@ if ( ! class_exists( 'TGGRSettings' ) ) {
 		 *
 		 * @mvc Model
 		 *
-		 * @param array $new_settings
+		 * @param array $output The output array of shortcode attributes.
+		 * @param array $pairs The supported attributes and their defaults.
+		 * @param array $atts The user defined shortcode attributes.
 		 * @return array
 		 */
 		public function maintain_nested_settings( $output, $pairs, $atts ) {
