@@ -59,6 +59,7 @@ if ( ! class_exists( 'TGGRSourceGoogle' ) ) {
 		public function register_hook_callbacks() {
 			add_action( 'init',                                       array( $this, 'init' ) );
 			add_action( 'admin_init',                                 array( $this, 'register_settings' ) );
+			add_filter( 'excerpt_length',                             array( $this, 'get_excerpt_length' ) );
 
 			add_filter( Tagregator::PREFIX . 'default_settings',      __CLASS__ . '::register_default_settings' );
 		}
@@ -256,6 +257,27 @@ if ( ! class_exists( 'TGGRSourceGoogle' ) ) {
 			);
 
 			return $necessary_data;
+		}
+
+		/**
+		 * Return the length of excerpts in words
+		 *
+		 * 40 was chosen because we want to get about 200 characters, so that Google+ posts aren't significantly
+		 * longer than those from Twitter or other sources. The average length of a word in the most common western
+		 * languages is roughly 5 characters, so 200 / 5 = 40.
+		 *
+		 * @param $number_words
+		 *
+		 * @return int
+		 */
+		public function get_excerpt_length( $number_words ) {
+			global $post;
+
+			if ( ! empty( $post->post_type ) && self::POST_TYPE_SLUG == $post->post_type ) {
+				$number_words = 40;
+			}
+
+			return $number_words;
 		}
 	} // end TGGRSourceGoogle
 }

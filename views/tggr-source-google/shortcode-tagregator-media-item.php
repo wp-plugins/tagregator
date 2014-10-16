@@ -10,8 +10,13 @@
 	</a>
 
 	<div class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>item-content">
-		<?php the_content(); ?>
-		
+		<?php if ( strlen( strip_tags( $post->post_content ) ) > 200 ) : ?>
+			<?php the_excerpt(); ?>
+			<p><a href="<?php echo esc_attr( $post_permalink ); ?>">Read the rest of this post on Google+</a></p>
+		<?php else : ?>
+			<?php the_content(); ?>
+		<?php endif; ?>
+
 		<?php if ( $media ) : ?>
 			<?php foreach ( $media as $media_item ) : ?>
 				<?php if ( 'image' == $media_item['type'] ) : ?>
