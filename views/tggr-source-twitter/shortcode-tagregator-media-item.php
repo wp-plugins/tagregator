@@ -10,7 +10,12 @@
 	</a>
 
 	<div class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>item-content">
-		<?php the_content(); ?>
+		<?php if ( strlen( strip_tags( $post->post_content ) ) > TGGRMediaSource::POST_CONTENT_LENGTH_DISPLAY_LIMIT ) : ?>
+			<?php the_excerpt(); ?>
+			<p><a href="<?php echo esc_attr( $post_permalink ); ?>">Read the rest of this tweet on Twitter</a></p>
+		<?php else : ?>
+			<?php the_content(); ?>
+		<?php endif; ?>
 		
 		<?php if ( $media ) : ?>
 			<?php foreach ( $media as $media_item ) : ?>
@@ -23,7 +28,7 @@
 
 	<img class="tggr-source-logo" src="<?php echo esc_attr( $logo_url ); ?>" alt="Twitter" />
 
-	<a href="https://twitter.com/<?php echo esc_attr( $author_username ); ?>/status/<?php echo esc_attr( $tweet_id ); ?>" class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>timestamp">
+	<a href="<?php echo esc_attr( $post_permalink ); ?>" class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>timestamp">
 		<?php echo human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago'; ?>
 	</a>
 

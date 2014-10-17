@@ -64,6 +64,7 @@ if ( ! class_exists( 'TGGRSourceInstagram' ) ) {
 			add_filter( Tagregator::PREFIX . 'default_settings',              __CLASS__ . '::register_default_settings' );
 			add_filter( 'the_content',                                        __CLASS__ . '::convert_urls_to_links' );
 			add_filter( 'the_content',                                        __CLASS__ . '::link_usernames' );
+			add_filter( 'excerpt_length',                                     __CLASS__ . '::get_excerpt_length' );
 		}
 
 		/**

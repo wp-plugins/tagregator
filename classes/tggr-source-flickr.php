@@ -60,6 +60,7 @@ if ( ! class_exists( 'TGGRSourceFlickr' ) ) {
 		public function register_hook_callbacks() {
 			add_action( 'init',                     array( $this, 'init' ) );
 			add_action( 'admin_init',               array( $this, 'register_settings' ) );
+			add_filter( 'excerpt_length',           __CLASS__ . '::get_excerpt_length' );
 
 			add_filter( Tagregator::PREFIX . 'default_settings', __CLASS__ . '::register_default_settings' );
 		}

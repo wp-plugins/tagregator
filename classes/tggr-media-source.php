@@ -15,6 +15,7 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 		const TAXONOMY_HASHTAG_NAME_PLURAL   = 'Hashtags';
 		const TAXONOMY_HASHTAG_SLUG          = 'hashtag';
 		const POST_AUTHOR_USERNAME           = 'tagregator';
+		const POST_CONTENT_LENGTH_DISPLAY_LIMIT = 200;
 
 
 		/**
@@ -419,6 +420,28 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 			}
 
 			return $content;
+		}
+
+		/**
+		 * Return the length of excerpts in words
+		 *
+		 * 40 was chosen because we want to get about 200 characters, so that no posts are significantly
+		 * longer than those from Twitter. The average length of a word in the most common western
+		 * languages is roughly 5 characters, so 200 / 5 = 40.
+		 *
+		 * @param $number_words
+		 *
+		 * @return int
+		 */
+		public static function get_excerpt_length( $number_words ) {
+			global $post;
+			$class = get_called_class();
+
+			if ( ! empty( $post->post_type ) && $class::POST_TYPE_SLUG == $post->post_type ) {
+				$number_words = 40;
+			}
+
+			return $number_words;
 		}
 	} // end TGGRModule
 }

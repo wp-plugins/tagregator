@@ -66,6 +66,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 			add_filter( 'update_option_'. TGGRSettings::SETTING_SLUG, __CLASS__ . '::obtain_bearer_token', 10, 2 );
 			add_filter( 'the_content',                                __CLASS__ . '::convert_urls_to_links' );
 			add_filter( 'the_content',                                __CLASS__ . '::link_hashtags_and_usernames' );
+			add_filter( 'excerpt_length',                             __CLASS__ . '::get_excerpt_length' );
 		}
 
 		/**
@@ -370,6 +371,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 			$postmeta = get_post_custom( $post_id );
 			$necessary_data = array(
 				'tweet_id'         => $postmeta['source_id'][0],
+				'post_permalink'   => sprintf( 'https://twitter.com/%s/status/%s', $postmeta['author_username'][0], $postmeta['source_id'][0] ),
 				'author_name'      => $postmeta['author_name'][0],
 				'author_username'  => $postmeta['author_username'][0],
 				'author_image_url' => $postmeta['author_image_url'][0],
