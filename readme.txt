@@ -104,6 +104,8 @@ Once you're done, please consider sharing it with others by [submitting it to th
 = v0.6 (?) =
 * [NEW] Switch back to Masonry layout, with several improvements (props [ryelle](https://profiles.wordpress.org/ryelle), [melchoyce](https://profiles.wordpress.org/melchoyce)).
 * [NEW] Added settings field for highlighted accounts, which get an extra CSS class so they can be styled differently than normal posts (props [ryelle](https://profiles.wordpress.org/ryelle)).
+* [NEW] Only retrieve new posts when the user is viewing the top of the shortcode output (props [ryelle](https://profiles.wordpress.org/ryelle)).
+* [NEW] Show a spinner when loading new posts.
 * [NEW] Add a basic logger to assist with troubleshooting API calls.
 * [UPDATE] Show an excerpt instead of the full post if the content is longer than 200 characters.
 

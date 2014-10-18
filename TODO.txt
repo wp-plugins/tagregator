@@ -69,6 +69,7 @@
 * use flexbox to space .tggr-actions items evenly across the container
 * use tggr-tweets-username / tggr-tweets-tag styles for other sources?
 
+
 == Low Priority ==
 * notice if at least 1 media source doesn't have creds entered / warning if havne't entered settings yet
 * meta caps instead of using update_options

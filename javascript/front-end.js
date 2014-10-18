@@ -17,13 +17,13 @@ function tggrWrapper( $ ) {
 				return;
 			}
 			
-			tggr.prefix             = 'tggr_';
-			tggr.cssPrefix          = 'tggr-';
-			tggr.loadingNewPosts    = '#' + tggr.cssPrefix + 'loading-new-posts';
-			tggr.mediaItemContainer = '#' + tggr.cssPrefix + 'media-item-container';
-			tggr.mediaItem          = '.' + tggr.cssPrefix + 'media-item';
-			tggr.existingItemIDs    = tggr.getExistingItemIDs();
-			tggr.retrievingNewItems = false;
+			tggr.prefix                 = 'tggr_';
+			tggr.cssPrefix              = 'tggr-';
+			tggr.loadingNewPosts        = '#' + tggr.cssPrefix + 'loading-new-posts';
+			tggr.mediaItemContainer     = '#' + tggr.cssPrefix + 'media-item-container';
+			tggr.mediaItem              = '.' + tggr.cssPrefix + 'media-item';
+			tggr.existingItemIDs        = tggr.getExistingItemIDs();
+			tggr.retrievingNewItems     = false;
 			tggr.loadingNewPostsVisible = tggr.isScrolledIntoView( tggr.loadingNewPosts );
 
 			/*
