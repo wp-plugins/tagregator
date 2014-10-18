@@ -183,6 +183,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 			$this->import_new_items( $hashtag );
 			$items = $this->get_media_items( $hashtag );
 			$new_items_markup = $this->get_new_items_markup( $items, $existing_item_ids );
+			$new_items_markup = str_replace( array( "\n", "\t" ), '', $new_items_markup );  // jQuery.prependTo() complains if a string of HTML doesn't start with a `<`
 
 			wp_die( json_encode( $new_items_markup ? $new_items_markup : 0 ) );
 		}
