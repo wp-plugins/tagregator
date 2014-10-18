@@ -24,6 +24,7 @@ function tggrWrapper( $ ) {
 			tggr.mediaItem          = '.' + tggr.cssPrefix + 'media-item';
 			tggr.existingItemIDs    = tggr.getExistingItemIDs();
 			tggr.retrievingNewItems = false;
+			tggr.loadingNewPostsVisible = tggr.isScrolledIntoView( tggr.loadingNewPosts );
 
 			/*
 			 * Enable Masonry for multi-column layouts
@@ -51,10 +52,61 @@ function tggrWrapper( $ ) {
 				} );
 
 				$( tggr.mediaItemContainer ).on( 'tggr-rendered', tggr.refreshLayout );
+				$( window ).on( 'scroll', tggr.toggleRetrieval );
 			}
 
+			tggr.enableRetrieval();
+		},
+
+		/**
+		 * Determines if an element is visible in the viewport
+		 *
+		 * Based on http://stackoverflow.com/a/488073/450127
+		 * Modified to detect if the entire element is visible (rather than just part)
+		 *
+		 * @param {string} element
+		 * @returns {boolean}
+		 */
+		isScrolledIntoView : function( element ) {
+			var docViewTop    = $( window ).scrollTop(),
+			    docViewBottom = docViewTop + $( window ).height(),
+			    elementTop    = $( element ).offset().top,
+			    elementBottom = elementTop + $( element ).height();
+
+			return ( ( docViewTop < elementTop ) && ( docViewBottom > elementBottom ) );
+		},
+
+		/**
+		 * Retrieve new posts and schedule automatic retrieves in the future
+		 */
+		enableRetrieval : function() {
 			tggr.retrieveNewItems();
-			setInterval( tggr.retrieveNewItems, tggrData.refreshInterval * 1000 );	// convert to milliseconds
+			tggr.retrievalInterval = setInterval( tggr.retrieveNewItems, tggrData.refreshInterval * 1000 );	// convert to milliseconds
+		},
+
+		/**
+		 * Only retrieve new posts when the user is viewing the top of Tagregator output
+		 *
+		 * If the user has scrolled down to the point where the masonry layout fills the screen, and we then add
+		 * new items and redraw the layout, we will potentially disrupt and disorient them, and probably make them
+		 * lose their place.
+		 *
+		 * So, when they scroll past the "Loading new posts" spinner, we stop retrieving new items. When they scroll
+		 * back above it, we immediately retrieve new items and re-establish the interval to automatically load them
+		 * in the future.
+		 *
+		 * @param {object} event
+		 */
+		toggleRetrieval : function( event ) {
+			var newState = tggr.isScrolledIntoView( tggr.loadingNewPosts );
+
+			if ( tggr.loadingNewPostsVisible && ! newState ) {
+				clearInterval( tggr.retrievalInterval );
+			} else if ( ! tggr.loadingNewPostsVisible && newState ) {
+				tggr.enableRetrieval();
+			}
+
+			tggr.loadingNewPostsVisible = newState;
 		},
 
 		/**
