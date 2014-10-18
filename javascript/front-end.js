@@ -19,6 +19,7 @@ function tggrWrapper( $ ) {
 			
 			tggr.prefix             = 'tggr_';
 			tggr.cssPrefix          = 'tggr-';
+			tggr.loadingNewPosts    = '#' + tggr.cssPrefix + 'loading-new-posts';
 			tggr.mediaItemContainer = '#' + tggr.cssPrefix + 'media-item-container';
 			tggr.mediaItem          = '.' + tggr.cssPrefix + 'media-item';
 			tggr.existingItemIDs    = tggr.getExistingItemIDs();
@@ -80,6 +81,7 @@ function tggrWrapper( $ ) {
 			}
 
 			tggr.retrievingNewItems = true;
+			$( tggr.loadingNewPosts ).removeClass( tggr.cssPrefix + 'transparent' );
 
 			$.post(
 				tggrData.ajaxPostURL, {
@@ -93,6 +95,7 @@ function tggrWrapper( $ ) {
 						tggr.refreshContent( $.parseJSON( response ) );
 					}
 
+					$( tggr.loadingNewPosts ).addClass( tggr.cssPrefix + 'transparent' );
 					tggr.retrievingNewItems = false;
 				}
 			);

@@ -2,6 +2,22 @@
  * @package Tagregator
  */
 
+
+.tggr-transparent {
+	opacity: 0;
+}
+
+#tggr-loading-new-posts {
+	text-align: center;
+	transition: all 1s ease;
+}
+
+	/* override TwentyTwelve box-shadow, border-radius conflict */
+	.entry-content #tggr-loading-new-posts img {
+		border-radius: 0;
+		box-shadow: none;
+	}
+
 #tggr-media-item-container {
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
