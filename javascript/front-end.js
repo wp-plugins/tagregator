@@ -112,7 +112,7 @@ function tggrWrapper( $ ) {
 		/**
 		 * Builds an array of which item IDs are already present in the DOM
 		 *
-		 * @return array
+		 * @return {array}
 		 */
 		getExistingItemIDs : function() {
 			var itemIDs = [];
@@ -155,6 +155,8 @@ function tggrWrapper( $ ) {
 
 		/**
 		 * Updates the DOM with new items that were retrieved during the last check
+		 *
+		 * @param {string} new_items_markup
 		 */
 		refreshContent : function( new_items_markup ) {
 			var $newItems;
@@ -168,6 +170,9 @@ function tggrWrapper( $ ) {
 
 		/**
 		 * Refresh Masonry's layout after we add new elements to the DOM.
+		 *
+		 * @param {object} event
+		 * @param {object} data
 		 */
 		refreshLayout: function( event, data ) {
 			$( tggr.mediaItemContainer ).masonry( 'prepended', data.items.get() );
