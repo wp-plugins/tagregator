@@ -13,10 +13,10 @@ function tggrWrapper( $ ) {
 		 * Initialization
 		 */
 		init : function() {
-			if( typeof tggrData === 'undefined' ) {
+			if ( typeof tggrData === 'undefined' ) {
 				return;
 			}
-
+			
 			tggr.prefix             = 'tggr_';
 			tggr.cssPrefix          = 'tggr-';
 			tggr.mediaItemContainer = '#' + tggr.cssPrefix + 'media-item-container';

@@ -11,10 +11,10 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 	abstract class TGGRMediaSource extends TGGRModule {
 		protected static $post_author_id;
 
-		const TAXONOMY_HASHTAG_NAME_SINGULAR = 'Hashtag';
-		const TAXONOMY_HASHTAG_NAME_PLURAL   = 'Hashtags';
-		const TAXONOMY_HASHTAG_SLUG          = 'hashtag';
-		const POST_AUTHOR_USERNAME           = 'tagregator';
+		const TAXONOMY_HASHTAG_NAME_SINGULAR    = 'Hashtag';
+		const TAXONOMY_HASHTAG_NAME_PLURAL      = 'Hashtags';
+		const TAXONOMY_HASHTAG_SLUG             = 'hashtag';
+		const POST_AUTHOR_USERNAME              = 'tagregator';
 		const POST_CONTENT_LENGTH_DISPLAY_LIMIT = 200;
 
 

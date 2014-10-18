@@ -51,7 +51,7 @@
 			}
 
 
-.tggr-media-item a,
+		.tggr-media-item a,
 		.entry-content .tggr-media-item a,	/* Override TwentyFourteen text-decoration conflict */
 		.tggr-item-content a.tggr-tweets-username,
 		.tggr-item-content a.tggr-tweets-tag,
