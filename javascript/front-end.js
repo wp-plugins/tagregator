@@ -143,8 +143,8 @@ function tggrWrapper( $ ) {
 				},
 
 				function( response ) {
-					if ( '-1' != response && '0' != response ) {  // WordPress successfully processed request and found new items
-						tggr.refreshContent( $.parseJSON( response ) );
+					if ( response.hasOwnProperty( 'success' ) && true === response.success && 0 != response.data ) {
+						tggr.refreshContent( response.data );
 					}
 
 					$( tggr.loadingNewPosts ).addClass( tggr.cssPrefix + 'transparent' );

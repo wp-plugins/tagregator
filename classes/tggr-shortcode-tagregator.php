@@ -174,10 +174,8 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 			$existing_item_ids = isset( $_REQUEST['existingItemIDs'] ) ? (array) $_REQUEST['existingItemIDs'] : array();
 			array_walk( $existing_item_ids, 'absint' );
 
-			$this->send_ajax_headers( 'text/html' );
-
 			if ( empty( $hashtag ) ) {
-				wp_die( -1 );
+				wp_send_json_error( array( 'error' => 'Invalid hashtag') );
 			}
 
 			$this->import_new_items( $hashtag );
@@ -185,7 +183,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 			$new_items_markup = $this->get_new_items_markup( $items, $existing_item_ids );
 			$new_items_markup = str_replace( array( "\n", "\t" ), '', $new_items_markup );  // jQuery.prependTo() complains if a string of HTML doesn't start with a `<`
 
-			wp_die( json_encode( $new_items_markup ? $new_items_markup : 0 ) );
+			wp_send_json_success( $new_items_markup ? $new_items_markup : 0 );
 		}
 
 		/**
@@ -252,7 +250,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 					$post_type = get_post_type();
 					$class_name = $this->post_types_to_class_names[ $post_type ];
 					extract( $class_name::get_instance()->get_item_view_data( $item->ID ) );
-					
+
 					require( self::get_view_folder_from_post_type( $post_type ) . '/shortcode-tagregator-media-item.php' );
 				}
 			}
@@ -269,20 +267,6 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		protected function get_view_folder_from_post_type( $post_type ) {
 			$class_name = $this->post_types_to_class_names[ $post_type ];
 			return $class_name::get_instance()->view_folder;
-		}
-
-		/**
-		 * Outputs the appropriate headers for responses to AJAX requests
-		 * In some cases, sending these are necessary to avoid browser quirks, especially the 200 header
-		 *
-		 * @param string $content_type The desired content type. e.g., 'text/html', 'application/json', etc
-		 */
-		protected static function send_ajax_headers( $content_type = 'text/html' ) {
-			header( 'Cache-Control: no-cache, must-revalidate' );
-			header( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
-			header( 'Content-Type: '. $content_type .'; charset=utf8' );
-			header( 'Content-Type: '. $content_type );
-			header( $_SERVER['SERVER_PROTOCOL'] . ' 200 OK' );
 		}
 		
 		/**
