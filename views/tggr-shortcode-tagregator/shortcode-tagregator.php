@@ -1,4 +1,4 @@
-<div id="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>media-item-container">
+<div id="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>media-item-container" class="<?php echo esc_attr( $attributes['layout'] ); ?>">
 	<?php if ( $items ) : ?>
 		<?php $this->render_media_items( $items ); ?>
 	<?php endif; ?>

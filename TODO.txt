@@ -66,7 +66,8 @@
 * make log page more readable. better formatting of the data array, line wrapping / scrolling, maybe unserialize nested items, etc. maybe use wp_list_table
 * add logging throughout the rest of the codebase, where appropriate
 * sometimes avatar images 404, i think that happens when someone changes their avatar after the post has been cached in the db. maybe have js detect when an avatar fails, and remove it, or replace it w/ a blank one, so don't have the ugly empty border
-
+* use flexbox to space .tggr-actions items evenly across the container
+* use tggr-tweets-username / tggr-tweets-tag styles for other sources?
 
 == Low Priority ==
 * notice if at least 1 media source doesn't have creds entered / warning if havne't entered settings yet
@@ -83,3 +84,4 @@
 * get_new_hashtagged_tweets() - if response code is 'over limit', then decrease refresh period? log it too
 * seems like maybe some ajax calls should be bringing new ones in, but they don't as often as they should. maybe bug w/ race condition checks or other area.
 * don't store tweet/photo/etc authors as postmeta? because creates redundant data. better to map them to something that's normalized
+* getExistingItemIDs should append to array when new items added instead of recounting all of them every time

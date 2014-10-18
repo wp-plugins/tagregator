@@ -26,15 +26,15 @@
 		<?php endif; ?>
 	</div>
 
-	<img class="tggr-source-logo" src="<?php echo esc_attr( $logo_url ); ?>" alt="Twitter" />
-
-	<a href="<?php echo esc_attr( $post_permalink ); ?>" class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>timestamp">
-		<?php echo human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago'; ?>
-	</a>
-
 	<ul class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>actions">
 		<li><a href="https://twitter.com/intent/tweet?in_reply_to=<?php echo esc_attr( $tweet_id ); ?>"><i class="icon-reply"></i> <span>Reply</span></a></li>
 		<li><a href="https://twitter.com/intent/retweet?tweet_id=<?php echo esc_attr( $tweet_id ); ?>"><i class="icon-retweet"></i> <span>Retweet</span></a></li>
 		<li><a href="https://twitter.com/intent/favorite?tweet_id=<?php echo esc_attr( $tweet_id ); ?>"><i class="icon-star"></i> <span>Favorite</span></a></li>
 	</ul>
+
+	<a href="<?php echo esc_attr( $post_permalink ); ?>" class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>timestamp">
+		<?php echo human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago'; ?>
+	</a>
+
+	<img class="tggr-source-logo" src="<?php echo esc_attr( $logo_url ); ?>" alt="Twitter" />
 </div>

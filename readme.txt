@@ -1,8 +1,8 @@
 === Tagregator ===
-Contributors:      wordpressdotorg, iandunn, shaunandrews
+Contributors:      wordpressdotorg, iandunn, shaunandrews, ryelle, melchoyce
 Donate link:       http://wordpressfoundation.org
 Tags:              hashtag, social media, aggregation, stream
-Requires at least: 3.6
+Requires at least: 3.9
 Tested up to:      4.0
 Stable tag:        0.5
 License:           GPLv2 or Later
@@ -46,6 +46,17 @@ You can also enter keywords or search queries, like this:
 
 `[tagregator hashtag="ice cream"]`
 
+
+You can specify the number of columns you want with the `layout` attribute:
+
+`[tagregator hashtag="#WordCamp" layout="one-column"]`
+
+`[tagregator hashtag="#WordCamp" layout="two-column"]`
+
+`[tagregator hashtag="#WordCamp" layout="three-column"]`
+
+The default is `three-column`. On mobile devices, it will automatically reduce to one or two-columns in order to fit on the screen.
+
 **Step 3)** Wait 30-60 seconds for the plugin to pull new content in.
 
 
@@ -66,6 +77,11 @@ This is probably because you haven't configured your timezone in WordPress's Gen
 = Why are some Tweets missing? =
 Twitter's API doesn't guarantee that every tweet will be available in the results it returns.
 
+= I liked the single-column look of versions 0.4 and 0.5 better, how can I get that back? =
+You can achieve a similar look by specifying `one-column` in the shortcode's `layout` parameter:
+
+`[tagregator hashtag="#WordCamp" layout="one-column"]`
+
 = How should I disclose security vulnerabilities? =
 If you find a security issue, please disclose it to us privately by sending an e-mail to security@wordpress.org, so that we can release a fix for it before you publish your findings.
 
@@ -84,6 +100,12 @@ Once you're done, please consider sharing it with others by [submitting it to th
 
 
 == Changelog ==
+
+= v0.6 (?) =
+* [NEW] Switch back to Masonry layout, with several improvements (props [ryelle](https://profiles.wordpress.org/ryelle), [melchoyce](https://profiles.wordpress.org/melchoyce)).
+* [NEW] Added settings field for highlighted accounts, which get an extra CSS class so they can be styled differently than normal posts (props [ryelle](https://profiles.wordpress.org/ryelle)).
+* [NEW] Add a basic logger to assist with troubleshooting API calls.
+* [UPDATE] Show an excerpt instead of the full post if the content is longer than 200 characters.
 
 = v0.5 (2014-07-23) =
 * [NEW] Add Google+ media source (props [fahmiadib](https://profiles.wordpress.org/fahmiadib)).
@@ -116,6 +138,9 @@ Once you're done, please consider sharing it with others by [submitting it to th
 
 
 == Upgrade Notice ==
+
+= 0.6 =
+Version 0.6 returns to a Masonry layout.
 
 = 0.5 =
 Version 0.5 adds support for Google+.

@@ -148,7 +148,7 @@ if ( ! class_exists( 'Tagregator' ) ) {
 			wp_register_script(
 				self::PREFIX . 'front-end',
 				plugins_url( 'javascript/front-end.js', dirname( __FILE__ ) ),
-				array( 'jquery' ),
+				array( 'jquery', 'masonry' ),
 				self::VERSION,
 				true
 			);

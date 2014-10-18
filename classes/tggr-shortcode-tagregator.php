@@ -113,11 +113,18 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		 * @return string
 		 */
 		public function shortcode_tagregator( $attributes ) {
-			$attributes = shortcode_atts( array( 'hashtag' => '' ), $attributes );
+			$attributes = shortcode_atts( array(
+				'hashtag' => '',
+				'layout'  => 'three-column',
+			), $attributes );
 			$items = array();
 
 			if ( $attributes['hashtag'] ) {
 				$items = self::get_media_items( $attributes['hashtag'] );
+			}
+
+			if ( ! in_array( $attributes['layout'], array( 'one-column', 'two-column', 'three-column' ) ) ) {
+				$attributes['layout'] = 'three-column';
 			}
 
 			ob_start();
@@ -239,11 +246,12 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 				if ( ! in_array( $item->ID, $excluded_item_ids ) ) {
 					$GLOBALS['post'] = $item;
 					setup_postdata( $GLOBALS['post'] );
-					
+
+					// Populate variables specific to this media type.
 					$post_type = get_post_type();
 					$class_name = $this->post_types_to_class_names[ $post_type ];
-
 					extract( $class_name::get_instance()->get_item_view_data( $item->ID ) );
+					
 					require( self::get_view_folder_from_post_type( $post_type ) . '/shortcode-tagregator-media-item.php' );
 				}
 			}

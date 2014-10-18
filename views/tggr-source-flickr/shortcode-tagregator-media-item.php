@@ -7,13 +7,6 @@
 	</a>
 
 	<div class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>item-content">
-		<?php if ( strlen( strip_tags( $post->post_content ) ) > TGGRMediaSource::POST_CONTENT_LENGTH_DISPLAY_LIMIT ) : ?>
-			<?php the_excerpt(); ?>
-			<p><a href="<?php echo esc_attr( $media_permalink ); ?>">See the rest of this description on Flickr</a></p>
-		<?php else : ?>
-			<?php the_content(); ?>
-		<?php endif; ?>
-
 		<?php if ( $media ) : ?>
 			<?php foreach ( $media as $media_item ) : ?>
 				<?php if ( 'image' == $media_item['type'] && $media_item['small_url'] ) : ?>
@@ -21,11 +14,18 @@
 				<?php endif; ?>
 			<?php endforeach; ?>
 		<?php endif; ?>
-	</div>
 
-	<img class="tggr-source-logo" src="<?php echo esc_attr( $logo_url ); ?>" alt="Flickr" />
+		<?php if ( strlen( strip_tags( $post->post_content ) ) > TGGRMediaSource::POST_CONTENT_LENGTH_DISPLAY_LIMIT ) : ?>
+			<?php the_excerpt(); ?>
+			<p><a href="<?php echo esc_attr( $media_permalink ); ?>">See the rest of this description on Flickr</a></p>
+		<?php else : ?>
+			<?php the_content(); ?>
+		<?php endif; ?>
+	</div>
 
 	<a href="<?php echo esc_url( $media_permalink ); ?>" class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>timestamp">
 		<?php echo human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago'; ?>
 	</a>
+
+	<img class="tggr-source-logo" src="<?php echo esc_attr( $logo_url ); ?>" alt="Flickr" />
 </div>
