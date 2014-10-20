@@ -36,10 +36,10 @@
 
 
 == Medium Priority ==
+* cron to save posts when no one viewing page. but how will it know which tags to get? hae to scan all posts/pages for shortcodes? maybe when the shortcode loads, it adds the current $post->ID to a _protected setting. then periodically empty the array so it doesn't keep pulling old ones after they're removed from the shortcode
 * update_newest_media_[id|date] is all source modules -	this needs to be stored for each hashtag. otherwise bug when multiple tags setup on same site b/c they're sharing the same id, so will miss some posts
 * on first setup (and probably later) sometimes not pulling in new posts the first few times. have to make muliple ajax requests. problems w/ the race condition blockers? or just twitter api being lame?
 * bug: everything after emoticons gets stripped off. example: https://twitter.com/ElysciaSheldon/status/388785059865829376
-* cron to save posts when no one viewing page. but how will it know which tags to get? hae to scan all posts/pages for shortcodes? maybe when the shortcode loads, it adds the current $post->ID to a _protected setting. then periodically empty the array so it doesn't keep pulling old ones after they're removed from the shortcode
 * class for vine
 * add support for videos attached to instagram/flickr in addition to images
 	* just use built in [video] shortcode. can use nested shortcodes? if not, just do it manually, but use mediaelements.js

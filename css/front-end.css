@@ -89,7 +89,7 @@
 		.tggr-author-profile {
 			display: block;
 			margin: 0 0 10px 0;
-			overflow: auto;
+			overflow: visible;
 		}
 
 			.tggr-author-profile img {
