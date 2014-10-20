@@ -164,10 +164,19 @@ function tggrWrapper( $ ) {
 		/**
 		 * Updates the DOM with new items that were retrieved during the last check
 		 *
+		 * We only update it when a refresh interval is set, though, for the same reasons described in
+		 * toggleRetrieval(). Normally this won't be called if the refresh interval is cleared, but it's
+		 * possible that it will be if the user scrolls to the top of the page and then scrolls back down
+		 * before the AJAX request returns.
+		 *
 		 * @param {string} new_items_markup
 		 */
 		refreshContent : function( new_items_markup ) {
 			var $newItems;
+
+			if ( ! tggr.retrievalInterval ) {
+				return;
+			}
 
 			$newItems = $( new_items_markup ).prependTo( tggr.mediaItemContainer );
 			$( tggr.mediaItemContainer ).trigger( 'tggr-rendered', { items: $newItems } );
