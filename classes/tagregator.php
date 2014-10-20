@@ -13,7 +13,7 @@ if ( ! class_exists( 'Tagregator' ) ) {
 		protected static $writeable_properties = array( 'modules', 'media_sources' );
 		protected $modules, $media_sources;
 
-		const VERSION    = '0.6-alpha1';
+		const VERSION    = '0.6-alpha2';
 		const PREFIX     = 'tggr_';
 		const CSS_PREFIX = 'tggr-';
 		const DEBUG_MODE = false;
