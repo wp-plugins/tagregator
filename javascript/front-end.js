@@ -23,6 +23,7 @@ function tggrWrapper( $ ) {
 			tggr.mediaItemContainer     = '#' + tggr.cssPrefix + 'media-item-container';
 			tggr.mediaItem              = '.' + tggr.cssPrefix + 'media-item';
 			tggr.existingItemIDs        = tggr.getExistingItemIDs();
+			tggr.retrievalInterval      = false;
 			tggr.retrievingNewItems     = false;
 			tggr.loadingNewPostsVisible = tggr.isScrolledIntoView( tggr.loadingNewPosts );
 
@@ -78,10 +79,16 @@ function tggrWrapper( $ ) {
 
 		/**
 		 * Retrieve new posts and schedule automatic retrieves in the future
+		 *
+		 * It's possible for this to get called multiple times, so we won't set an interval if we already have one.
+		 * Otherwise only one of them would get cleared and the page would continue to load new pots when we don't
+		 * want it to.
 		 */
 		enableRetrieval : function() {
-			tggr.retrieveNewItems();
-			tggr.retrievalInterval = setInterval( tggr.retrieveNewItems, tggrData.refreshInterval * 1000 );	// convert to milliseconds
+			if ( ! tggr.retrievalInterval ) {
+				tggr.retrieveNewItems();
+				tggr.retrievalInterval = setInterval( tggr.retrieveNewItems, tggrData.refreshInterval * 1000 );	// convert to milliseconds
+			}
 		},
 
 		/**
@@ -102,6 +109,7 @@ function tggrWrapper( $ ) {
 
 			if ( tggr.loadingNewPostsVisible && ! newState ) {
 				clearInterval( tggr.retrievalInterval );
+				tggr.retrievalInterval = false;
 			} else if ( ! tggr.loadingNewPostsVisible && newState ) {
 				tggr.enableRetrieval();
 			}
