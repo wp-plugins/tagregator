@@ -4,7 +4,7 @@
 
 	<p>In order to use <?php echo esc_html( TGGR_NAME ); ?> you'll need to obtain access keys for each service that you would like to pull into your stream.</p>
 
-	<p>Each service has a <em>Highlighted Accounts</em> field where you can enter a comma-separated list of account names. Any items posted from those accounts will be given the <code>tggr_highlighted_account</code> CSS class, so that they can be styled differently from other items.</p>
+	<p>Each service has a <em>Highlighted Accounts</em> field where you can enter a comma-separated list of account names. Any items posted from those accounts will be given the <code>tggr-highlighted-account</code> CSS class, so that they can be styled differently from other items.</p>
 
 	<form method="post" action="options.php">
 		<?php settings_fields( Tagregator::PREFIX . 'settings' ); ?>
