@@ -56,17 +56,17 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 			);
 
 			$post_type_params = array(
-				'labels'          => $labels,
-				'singular_label'  => $singular_name,
-				'public'          => true,
-				'show_in_menu'    => TGGRSettings::MENU_SLUG,
-				'hierarchical'    => true,
+				'labels'              => $labels,
+				'singular_label'      => $singular_name,
+				'public'              => true,
+				'show_in_menu'        => TGGRSettings::MENU_SLUG,
+				'hierarchical'        => true,
 				'exclude_from_search' => true,
-				'capability_type' => 'post',
-				'has_archive'     => true,
-				'rewrite'         => array( 'slug' => $slug, 'with_front' => false ),
-				'query_var'       => true,
-				'supports'        => array( 'title', 'editor', 'thumbnail', )
+				'capability_type'     => 'post',
+				'has_archive'         => true,
+				'rewrite'             => array( 'slug' => $slug, 'with_front' => false ),
+				'query_var'           => true,
+				'supports'            => array( 'title', 'editor', 'thumbnail' )
 			);
 
 			return apply_filters( Tagregator::PREFIX . 'post-type-params', $post_type_params );
