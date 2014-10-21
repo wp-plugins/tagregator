@@ -7,7 +7,7 @@
 * subscribers/etc can see menu item, but when click on it get cap error
 * tweets w/ emoji breaking when inserted into db.
 	* maybe base64-encode them before saving them, but needs to be backcompat.
-	* maybe do to all services in case they start supporting emoji in future.
+	* do to all services in case they start supporting emoji in future. instagram supports it now.
 	* https://core.trac.wordpress.org/ticket/27961
 
 	
@@ -43,8 +43,7 @@
 * class for vine
 * add support for videos attached to instagram/flickr in addition to images
 	* just use built in [video] shortcode. can use nested shortcodes? if not, just do it manually, but use mediaelements.js
-* support pulling from usernames
-* support multiple hashtags,usernames on one page
+* support pulling from usernames, including multiple at the same time
 * infinite scroll? so you can see what happened earlier
 * add meta boxes to posts to show extra fields, and save values
 * postmeta key to display/hide a post
@@ -81,7 +80,6 @@
 * maybe use twitter 'authorize app' process ala Tweet Watcher, rather than asking them to create a their own app. rate limits become new problem then? or does that solve rate limit problem b/c each user has their own limit?
 * using transients incorrectly (see #20316); use option instead
 * create_post_author() - todo if multisite, make sure exists on current blog
-* update_newest_tweet_id() - support multiple hashtags
 * get_new_hashtagged_tweets() - if response code is 'over limit', then decrease refresh period? log it too
 * seems like maybe some ajax calls should be bringing new ones in, but they don't as often as they should. maybe bug w/ race condition checks or other area.
 * don't store tweet/photo/etc authors as postmeta? because creates redundant data. better to map them to something that's normalized

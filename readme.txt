@@ -29,15 +29,13 @@ For help installing this (or any other) WordPress plugin, please read the [Manag
 
 When <a href="https://dev.twitter.com/apps/new">creating a Twitter application</a>, you should enter the URL of your website in the "Website" field (e.g., `http://www.example.org`), and then leave the "Callback URL" field empty. Once the application is created, copy the Consumer Key and Consumer Secret into Tagregator's settings.
 
-**Step 2)** [Add the [tagregator] shortcode to a post or page](http://codex.wordpress.org/Shortcode), and include the hashtag you want to aggregate:
+**Step 2)** [Add the [tagregator] shortcode to a post or page](http://codex.wordpress.org/Shortcode), and include the hashtag(s) you want to aggregate:
 
 Examples:
 
 `[tagregator hashtag="#WordPress"]`
 
-`[tagregator hashtag="#kiva"]`
-
-`[tagregator hashtag="#overtherhine"]`
+`[tagregator hashtag="#wcsf, #wcsf14"]`
 
 
 You can also enter keywords or search queries, like this:
@@ -106,6 +104,7 @@ Once you're done, please consider sharing it with others by [submitting it to th
 * [NEW] Added settings field for highlighted accounts, which get an extra CSS class so they can be styled differently than normal posts (props [ryelle](https://profiles.wordpress.org/ryelle)).
 * [NEW] Only retrieve new posts when the user is viewing the top of the shortcode output (props [ryelle](https://profiles.wordpress.org/ryelle)).
 * [NEW] Show a spinner when loading new posts.
+* [NEW] Multiple hashtags in a single shortcode are now supported.
 * [NEW] Add a basic logger to assist with troubleshooting API calls.
 * [UPDATE] Show an excerpt instead of the full post if the content is longer than 200 characters.
 

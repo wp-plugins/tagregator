@@ -133,32 +133,46 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		}
 
 		/**
-		 * Gets all of the items from all of the media sources that are assigned to the given hashtag
+		 * Gets all of the items from all of the media sources that are assigned to the given hashtags
 		 * @mvc Model
 		 *
-		 * @param string $hashtag
+		 * @param string $hashtags Comma-separated list of hashtags
 		 * @return array
 		 */
-		protected function get_media_items( $hashtag ) {
-			$items = $post_types = array();
+		protected function get_media_items( $hashtags ) {
+			$items = $post_types = $terms = array();
+			$hashtags = explode( ',', $hashtags );
 
 			foreach ( Tagregator::get_instance()->media_sources as $source ) {
 				$post_types[] = $source::POST_TYPE_SLUG;
 			}
 
-			$term = get_term_by( 'name', $hashtag, TGGRMediaSource::TAXONOMY_HASHTAG_SLUG );
-			if ( isset ( $term->slug ) ) {
-				$items = get_posts( array(
-					'posts_per_page'   => apply_filters( Tagregator::PREFIX . 'media_items_per_page', 30 ),
-					'post_type'        => $post_types,
-					'tax_query'        => array(
-						array(
-							'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
-							'field'    => 'slug',
-							'terms'    => $term->slug,
-						),
+			foreach ( $hashtags as $hashtag ) {
+				$term = get_term_by( 'name', trim( $hashtag ), TGGRMediaSource::TAXONOMY_HASHTAG_SLUG );
+
+				if ( $term ) {
+					$terms[] = $term;
+				}
+			}
+
+			if ( $terms ) {
+				$params = array(
+					'posts_per_page' => apply_filters( Tagregator::PREFIX . 'media_items_per_page', 30 ),
+					'post_type'      => $post_types,
+					'tax_query'      => array(
+						'relation'   => 'OR',
 					),
-				) );
+				);
+
+				foreach ( $terms as $term ) {
+					$params['tax_query'][] = array(
+						'taxonomy' => TGGRMediaSource::TAXONOMY_HASHTAG_SLUG,
+						'field'    => 'slug',
+						'terms'    => $term->slug,
+					);
+				}
+
+				$items = get_posts( $params );
 			}
 
 			return $items;
@@ -190,17 +204,20 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		 * Imports the latest items from media sources
 		 * @mvc Controller
 		 * 
-		 * @param string $hashtag
+		 * @param string $hashtags Comma-separated list of hashtags
 		 * @param string $rate_limit 'respect' to enforce the rate limit, or 'ignore' to ignore it
 		 */
-		protected function import_new_items( $hashtag, $rate_limit = 'respect' ) {
+		protected function import_new_items( $hashtags, $rate_limit = 'respect' ) {
 			$last_fetch = get_transient( Tagregator::PREFIX . 'last_media_fetch', 0 );
+			$hashtags   = explode( ',', $hashtags );
 
 			if ( 'ignore' == $rate_limit || self::refresh_interval_elapsed( $last_fetch, $this->refresh_interval ) ) {
 				set_transient( Tagregator::PREFIX . 'last_media_fetch', microtime( true ) );	// do this right away to minimize the chance of race conditions
 				
 				foreach ( Tagregator::get_instance()->media_sources as $source ) {
-					$source->import_new_items( $hashtag );
+					foreach( $hashtags as $hashtag ) {
+						$source->import_new_items( trim( $hashtag ) );
+					}
 				}
 			}
 		}
