@@ -106,6 +106,7 @@ Once you're done, please consider sharing it with others by [submitting it to th
 * [NEW] Show a spinner when loading new posts.
 * [NEW] Multiple hashtags in a single shortcode are now supported.
 * [NEW] Add a basic logger to assist with troubleshooting API calls.
+* [UPDATE] Imported posts will no longer appear in front-end search results.
 * [UPDATE] Show an excerpt instead of the full post if the content is longer than 200 characters.
 
 = v0.5 (2014-07-23) =

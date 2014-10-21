@@ -61,6 +61,7 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 				'public'          => true,
 				'show_in_menu'    => TGGRSettings::MENU_SLUG,
 				'hierarchical'    => true,
+				'exclude_from_search' => true,
 				'capability_type' => 'post',
 				'has_archive'     => true,
 				'rewrite'         => array( 'slug' => $slug, 'with_front' => false ),
