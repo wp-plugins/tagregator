@@ -64,7 +64,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 
 			add_filter( Tagregator::PREFIX . 'default_settings',      __CLASS__ . '::register_default_settings' );
 			add_filter( 'update_option_'. TGGRSettings::SETTING_SLUG, __CLASS__ . '::obtain_bearer_token', 10, 2 );
-			add_filter( 'the_content',                                __CLASS__ . '::convert_urls_to_links' );
+			add_filter( 'the_content',                                __CLASS__ . '::convert_urls_to_links', 9 );    // before wp_texturize() to avoid malformed links. see https://core.trac.wordpress.org/ticket/17097#comment:1
 			add_filter( 'the_content',                                __CLASS__ . '::link_hashtags_and_usernames' );
 			add_filter( 'excerpt_length',                             __CLASS__ . '::get_excerpt_length' );
 		}
