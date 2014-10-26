@@ -208,6 +208,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 		 * @param string $rate_limit 'respect' to enforce the rate limit, or 'ignore' to ignore it
 		 */
 		protected function import_new_items( $hashtags, $rate_limit = 'respect' ) {
+			$hashtags      = explode( ',', $hashtags );
 			$semaphore_key = (int) base_convert( substr( md5( __METHOD__ ), 0, 8 ), 16, 10 );
 			$semaphore_id  = function_exists( 'sem_get' ) ? sem_get( $semaphore_key ) : false;
 
@@ -216,7 +217,6 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 			}
 
 			$last_fetch = get_transient( Tagregator::PREFIX . 'last_media_fetch', 0 );
-			$hashtags   = explode( ',', $hashtags );
 
 			if ( 'ignore' == $rate_limit || self::refresh_interval_elapsed( $last_fetch, $this->refresh_interval ) ) {
 				set_transient( Tagregator::PREFIX . 'last_media_fetch', microtime( true ) );	// do this right away to minimize the chance of race conditions on systems that don't support the Semaphore module
