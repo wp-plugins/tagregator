@@ -202,14 +202,22 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 
 		/**
 		 * Imports the latest items from media sources
+		 *
 		 * @mvc Controller
+		 *
+		 * The semaphore is used to prevent importing the same post twice in a parallel request. The key is
+		 * based on the `site_url()` in order to avoid blocking requests to other sites in the same multisite network,
+		 * or other single-site installations on the same server. We could include the hashtag in the key as
+		 * well in order to allow parallel requests for different hashtags, but that would require handling the case
+		 * where multiple hashtags are used in one or both requests, which would complicate things without adding
+		 * much benefit.
 		 * 
 		 * @param string $hashtags Comma-separated list of hashtags
 		 * @param string $rate_limit 'respect' to enforce the rate limit, or 'ignore' to ignore it
 		 */
 		protected function import_new_items( $hashtags, $rate_limit = 'respect' ) {
 			$hashtags      = explode( ',', $hashtags );
-			$semaphore_key = (int) base_convert( substr( md5( __METHOD__ ), 0, 8 ), 16, 10 );
+			$semaphore_key = (int) base_convert( substr( md5( __METHOD__ . site_url() ), 0, 8 ), 16, 10 );
 			$semaphore_id  = function_exists( 'sem_get' ) ? sem_get( $semaphore_key ) : false;
 
 			if ( $semaphore_id ) {
