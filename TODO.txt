@@ -83,3 +83,4 @@
 * seems like maybe some ajax calls should be bringing new ones in, but they don't as often as they should. maybe bug w/ race condition checks or other area.
 * don't store tweet/photo/etc authors as postmeta? because creates redundant data. better to map them to something that's normalized
 * getExistingItemIDs should append to array when new items added instead of recounting all of them every time
+* log() can use compact() instead of manually building the array entry

@@ -364,11 +364,12 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 		 * Gathers the data that the media-item view will need
 		 * @mvc Model
 		 *
-		 * @param int $post_id
+		 * @param WP_Post $post
+		 * 
 		 * @return array
 		 */
-		public function get_item_view_data( $post_id ) {
-			$postmeta = get_post_custom( $post_id );
+		public function get_item_view_data( $post ) {
+			$postmeta = get_post_custom( $post->ID );
 			$necessary_data = array(
 				'tweet_id'         => $postmeta['source_id'][0],
 				'post_permalink'   => sprintf( 'https://twitter.com/%s/status/%s', $postmeta['author_username'][0], $postmeta['source_id'][0] ),
@@ -377,7 +378,8 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 				'author_image_url' => $postmeta['author_image_url'][0],
 				'media'            => isset( $postmeta['media'][0] ) ? maybe_unserialize( $postmeta['media'][0] ) : array(),
 				'logo_url'         => plugins_url( 'images/source-logos/twitter.png', __DIR__ ),
-				'css_classes'      => self::get_css_classes( $post_id, $postmeta['author_username'][0] ),
+				'css_classes'      => self::get_css_classes( $post->ID, $postmeta['author_username'][0] ),
+				'show_excerpt'     => self::show_excerpt( $post ),
 			);
 
 			return $necessary_data;

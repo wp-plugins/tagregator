@@ -375,10 +375,10 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 		 * Gathers the data that the media-item view will need
 		 * @mvc Model
 		 *
-		 * @param int $post_id
+		 * @param WP_Post $post
 		 * @return array
 		 */
-		abstract public function get_item_view_data( $post_id );
+		abstract public function get_item_view_data( $post );
 
 		/**
 		 * Determine the relevant CSS classes for a media item container
@@ -443,6 +443,23 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 			}
 
 			return $number_words;
+		}
+
+		/**
+		 * Determine whether we should display the full post or an excerpt.
+		 *
+		 * mb_strlen() is used when available because strlen() is not multibyte-aware. Passing in a 140-character
+		 * message in Cyrillic, for example, will return 280.
+		 *
+		 * @param WP_Post $post
+		 *
+		 * @return bool
+		 */
+		public static function show_excerpt( $post ) {
+			$content = strip_tags( $post->post_content );
+			$length  = function_exists( 'mb_strlen' ) ? mb_strlen( $content ) : strlen( $content );
+
+			return $length > self::POST_CONTENT_LENGTH_DISPLAY_LIMIT;
 		}
 	} // end TGGRModule
 }

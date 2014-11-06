@@ -19,7 +19,7 @@
 			<?php endforeach; ?>
 		<?php endif; ?>
 
-		<?php if ( strlen( strip_tags( $post->post_content ) ) > TGGRMediaSource::POST_CONTENT_LENGTH_DISPLAY_LIMIT ) : ?>
+		<?php if ( $show_excerpt ) : ?>
 			<?php the_excerpt(); ?>
 			<p><a href="<?php echo esc_attr( $media_permalink ); ?>">See the rest of this description on Instagram</a></p>
 		<?php else : ?>

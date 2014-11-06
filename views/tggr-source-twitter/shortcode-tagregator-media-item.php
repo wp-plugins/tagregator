@@ -10,7 +10,7 @@
 	</a>
 
 	<div class="<?php echo esc_attr( Tagregator::CSS_PREFIX ); ?>item-content">
-		<?php if ( strlen( strip_tags( $post->post_content ) ) > TGGRMediaSource::POST_CONTENT_LENGTH_DISPLAY_LIMIT ) : ?>
+		<?php if ( $show_excerpt ) : ?>
 			<?php the_excerpt(); ?>
 			<p><a href="<?php echo esc_attr( $post_permalink ); ?>">Read the rest of this tweet on Twitter</a></p>
 		<?php else : ?>

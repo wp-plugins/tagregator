@@ -108,6 +108,7 @@ Once you're done, please consider sharing it with others by [submitting it to th
 * [NEW] Add a basic logger to assist with troubleshooting API calls.
 * [UPDATE] Imported posts will no longer appear in front-end search results.
 * [UPDATE] Show an excerpt instead of the full post if the content is longer than 200 characters.
+* [FIX] Using a semaphore to prevent race conditions which resulted in duplicated posts.
 
 = v0.5 (2014-07-23) =
 * [NEW] Add Google+ media source (props [fahmiadib](https://profiles.wordpress.org/fahmiadib)).

@@ -277,7 +277,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 					// Populate variables specific to this media type.
 					$post_type = get_post_type();
 					$class_name = $this->post_types_to_class_names[ $post_type ];
-					extract( $class_name::get_instance()->get_item_view_data( $item->ID ) );
+					extract( $class_name::get_instance()->get_item_view_data( $item ) );
 
 					require( self::get_view_folder_from_post_type( $post_type ) . '/shortcode-tagregator-media-item.php' );
 				}
