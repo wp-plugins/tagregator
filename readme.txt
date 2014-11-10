@@ -81,7 +81,7 @@ You can achieve a similar look by specifying `one-column` in the shortcode's `la
 `[tagregator hashtag="#WordCamp" layout="one-column"]`
 
 = How should I disclose security vulnerabilities? =
-If you find a security issue, please disclose it to us privately by sending an e-mail to security@wordpress.org, so that we can release a fix for it before you publish your findings.
+If you find a security issue, please disclose it to us privately via [Automattic's HackerOne bounty program](https://hackerone.com/automattic), so that we can release a fix for it before you publish your findings.
 
 = Can I create my own media sources for services that aren't included (e.g, Facebook, Vine, etc) =
 Yes, Tagregator allows you to add custom modules that you develop for other services by hooking into the `tggr_media_sources` filter and adding an instance of your class.
@@ -92,14 +92,14 @@ Once you're done, please consider sharing it with others by [submitting it to th
 
 == Screenshots ==
 
-1. An example of how the social media stream looks
-2. The settings panel
-3. The social media items stored as a custom post type
+1. An example of how the social media stream looks with a dark background.
+1. An example of how it looks with a light background; also shows how highlighted posts can look.
+1. The settings panel.
 
 
 == Changelog ==
 
-= v0.6 (?) =
+= v0.6 (2014-11-10) =
 * [NEW] Switch back to Masonry layout, with several improvements (props [ryelle](https://profiles.wordpress.org/ryelle), [melchoyce](https://profiles.wordpress.org/melchoyce)).
 * [NEW] Added settings field for highlighted accounts, which get an extra CSS class so they can be styled differently than normal posts (props [ryelle](https://profiles.wordpress.org/ryelle)).
 * [NEW] Only retrieve new posts when the user is viewing the top of the shortcode output (props [ryelle](https://profiles.wordpress.org/ryelle)).
