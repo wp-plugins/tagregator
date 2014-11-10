@@ -92,8 +92,8 @@ Once you're done, please consider sharing it with others by [submitting it to th
 
 == Screenshots ==
 
-1. An example of how the social media stream looks with a dark background.
-1. An example of how it looks with a light background; also shows how highlighted posts can look.
+1. An example of how the social media stream looks by default with a dark background.
+1. An example of how it looks by default with a light background; also shows how highlighted posts can look.
 1. The settings panel.
 
 
