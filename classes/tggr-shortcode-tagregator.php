@@ -157,7 +157,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 
 			if ( $terms ) {
 				$params = array(
-					'posts_per_page' => apply_filters( Tagregator::PREFIX . 'media_items_per_page', 30 ),
+					'posts_per_page' => apply_filters( Tagregator::PREFIX . 'media_items_per_page', 30 ),   // @deprecated, use `tggr-get_media_items_params` instead
 					'post_type'      => $post_types,
 					'tax_query'      => array(
 						'relation'   => 'OR',
@@ -172,7 +172,7 @@ if ( ! class_exists( 'TGGRShortcodeTagregator' ) ) {
 					);
 				}
 
-				$items = get_posts( $params );
+				$items = get_posts( apply_filters( Tagregator::PREFIX . 'get_media_items_params', $params ) );
 			}
 
 			return $items;
