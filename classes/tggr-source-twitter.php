@@ -179,7 +179,7 @@ if ( ! class_exists( 'TGGRSourceTwitter' ) ) {
 					'body' => 'grant_type=client_credentials'
 				)
 			);
-			
+
 			$token = json_decode( wp_remote_retrieve_body( $response ) );
 
 			if ( isset( $token->token_type ) && 'bearer' == $token->token_type ) {

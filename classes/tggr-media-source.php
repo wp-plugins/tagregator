@@ -58,7 +58,7 @@ if ( ! class_exists( 'TGGRMediaSource' ) ) {
 			$post_type_params = array(
 				'labels'              => $labels,
 				'singular_label'      => $singular_name,
-				'public'              => true,
+				'public'              => true,  // todo should this be public? don't want showing up in search results or json api, don't want front-end singular posts. why was it set to true? maybe leave public but set publicly_queryable to false?
 				'show_in_menu'        => TGGRSettings::MENU_SLUG,
 				'hierarchical'        => true,
 				'exclude_from_search' => true,
