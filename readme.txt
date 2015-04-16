@@ -3,7 +3,7 @@ Contributors:      wordpressdotorg, iandunn, shaunandrews, ryelle, melchoyce
 Donate link:       http://wordpressfoundation.org
 Tags:              hashtag, social media, aggregation, stream
 Requires at least: 3.9
-Tested up to:      4.1
+Tested up to:      4.2
 Stable tag:        0.6
 License:           GPLv2 or Later
 
