@@ -1,6 +1,6 @@
 <div class="wrap">
 	<div id="icon-options-general" class="icon32"><br /></div>
-	<h2><?php esc_html_e( TGGR_NAME ); ?> Settings</h2>
+	<h1><?php esc_html_e( TGGR_NAME ); ?> Settings</h1>
 
 	<p>In order to use <?php echo esc_html( TGGR_NAME ); ?> you'll need to obtain access keys for each service that you would like to pull into your stream.</p>
 
